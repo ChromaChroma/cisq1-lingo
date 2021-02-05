@@ -7,7 +7,6 @@ Feature: Lingo trainer
     When I request to start a new game
     Then A new game is started
 
-
   Scenario Outline: Start new round
     Given that I am playing a game
     And the round was won
@@ -21,7 +20,7 @@ Feature: Lingo trainer
     |6              |7          |
     |7              |5          |
 
-    # Failure path:
+    # Failure path: Start round when round over
     Given that I am playing a game
     And the round was lost
     Then I cannot start a new round
