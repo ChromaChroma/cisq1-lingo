@@ -6,10 +6,13 @@ Feature: Lingo trainer
   Scenario: Start new game
     When I request to start a new game
     Then A new game is started
+    And a hidden "5" letter word is shown
+    And I am on my first guess
 
   Scenario Outline: Start new round
     Given that I am playing a game
     And the round was won
+    And I am not in an active round
     And the last word had "<previous length>" letters
     When I start a new round
     Then the word to guess has "<next length>" letters
@@ -56,6 +59,7 @@ Feature: Lingo trainer
     When I guess for the fifth time this round
     And the guess is wrong
     Then the system will end the game
+    And show that the game is over
 
   #Failure path: Guess after word is guessed
     Given that I am playing a game
