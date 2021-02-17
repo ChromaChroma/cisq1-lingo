@@ -1,5 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidFeedbackException;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +10,7 @@ public class Feedback {
     List<Mark> marks;
 
     public Feedback(String attempt, List<Mark> marks) {
+        if (attempt.length() != marks.size()) throw new InvalidFeedbackException();
         this.attempt = attempt;
         this.marks = marks;
     }
@@ -17,10 +20,10 @@ public class Feedback {
                 .allMatch( mark -> mark == Mark.CORRECT);
     }
 
-    public boolean isWordValid() {
-        return marks.stream()
-                .noneMatch(mark -> mark == Mark.INVALID);
+    public Hint giveHint() {
+        return Hint.of(attempt, marks);
     }
+
 
     @Override
     public boolean equals(Object o) {
