@@ -1,5 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidHintException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +10,7 @@ public class Hint {
     private List<Character> hint;
 
     static Hint of(String word, List<Mark> marks) {
+        if (word.length() != marks.size()) throw new InvalidHintException();
         List<Character> chars = new ArrayList<>();
         char[] wordChars = word.toCharArray();
         chars.add(wordChars[0]);
