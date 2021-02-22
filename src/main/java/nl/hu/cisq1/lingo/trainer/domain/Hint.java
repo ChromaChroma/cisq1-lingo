@@ -9,16 +9,30 @@ import java.util.Objects;
 public class Hint {
     private List<Character> hint;
 
-    static Hint of(String word, List<Mark> marks) {
-        if (word.length() != marks.size()) throw new InvalidHintException();
-        List<Character> chars = new ArrayList<>();
+    static Hint of(Hint previousHint, String word, List<Mark> marks) {
+        checkHintAndMarksSize(previousHint, marks);
+        checkWordAndMarksSize(word, marks);
+
+        List<Character> resChars = new ArrayList<>();
         char[] wordChars = word.toCharArray();
-        chars.add(wordChars[0]);
-        for (int i = 1; i < marks.size(); i ++) {
-            if (marks.get(i) == Mark.CORRECT) chars.add(wordChars[i]);
-            else chars.add('.');
+        for (int i = 0; i < previousHint.hint.size(); i ++) {
+            String charString = previousHint.hint.get(i).toString();
+            if (charString.matches("[a-zA-Z]+\\.?")){
+                resChars.add(i, previousHint.hint.get(i));
+            }else if (marks.get(i) == Mark.CORRECT){
+                resChars.add(wordChars[i]);
+            } else {
+                resChars.add('.');
+            }
         }
-        return new Hint(chars);
+        return new Hint(resChars);
+    }
+
+    private static void checkHintAndMarksSize(Hint previousHint, List<Mark> marks) {
+        if (previousHint.hint.size() != marks.size()) throw new InvalidHintException("Previous hint and marks arent the same size");
+    }
+    private static void checkWordAndMarksSize(String word, List<Mark> marks) {
+        if (word.length() != marks.size()) throw new InvalidHintException("Word and marks arent the same size");
     }
 
     public Hint(List<Character> hint) {
