@@ -10,7 +10,7 @@ public class Feedback {
     List<Mark> marks;
 
     public Feedback(String attempt, List<Mark> marks) {
-        if (attempt.length() != marks.size()) throw new InvalidFeedbackException();
+        if (attempt.length() != marks.size()) throw new InvalidFeedbackException("Guess and marks lengths do not match");
         this.attempt = attempt;
         this.marks = marks;
     }
@@ -20,10 +20,9 @@ public class Feedback {
                 .allMatch( mark -> mark == Mark.CORRECT);
     }
 
-    public Hint giveHint() {
-        return Hint.of(attempt, marks);
+    public Hint giveHint(Hint previousHint) {
+        return Hint.of(previousHint, attempt, marks);
     }
-
 
     @Override
     public boolean equals(Object o) {
