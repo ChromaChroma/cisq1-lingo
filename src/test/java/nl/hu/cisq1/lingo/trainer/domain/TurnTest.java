@@ -54,7 +54,7 @@ class TurnTest {
     }
     @ParameterizedTest
     @MethodSource("provideTurnGuesses")
-    @DisplayName("mMake correct and non invalid guesses")
+    @DisplayName("Make correct and non invalid guesses")
     void makeNonInvalidGuesses(String word, String guess) {
         turn.takeGuess(word, guess);
         assertNotNull(turn.getFeedback());
