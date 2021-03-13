@@ -42,6 +42,13 @@ class HintTest {
                 )
         );
     }
+    @ParameterizedTest
+    @MethodSource("provideHintExamples")
+    @DisplayName("Hint.of() creates correct hint objects")
+    void hintOfCreatesCorrectHint(String guess, List<Mark> marks, Hint previousHint, Hint expectedHint) {
+        Hint hint = Hint.of(previousHint, guess, marks);
+        assertEquals(expectedHint, hint);
+    }
 
     @Test
     @DisplayName("Hint.of() makes only first letter visible if invalid")
@@ -50,13 +57,11 @@ class HintTest {
         assertTrue(hint.toString().contains(List.of('w', 'o', '.', '.', '.').toString()));
     }
 
-
-    @ParameterizedTest
-    @MethodSource("provideHintExamples")
-    @DisplayName("Hint.of() creates correct hint objects")
-    void hintOfCreatesCorrectHint(String guess, List<Mark> marks, Hint previousHint, Hint expectedHint) {
-        Hint hint = Hint.of(previousHint, guess, marks);
-        assertEquals(expectedHint, hint);
+    @Test
+    @DisplayName("Hint.of() Returns hint with just the correct letters visible when previous hint is null")
+    void hintReturnsHintJustCorrectLettersWithPreviousHintNull() {
+        Hint hint = Hint.of(null, "woord", List.of(Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.PRESENT, Mark.CORRECT));
+        assertEquals(List.of('w', '.', '.', '.', 'd'), hint.getHint());
     }
 
     static Stream<Arguments> provideUnequalLengthsHintExamples() {

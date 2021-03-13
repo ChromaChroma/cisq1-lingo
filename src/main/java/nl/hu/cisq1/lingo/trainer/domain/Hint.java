@@ -10,6 +10,10 @@ public class Hint {
     private List<Character> hint;
 
     static Hint of(Hint previousHint, String word, List<Mark> marks) {
+        if (previousHint == null) {
+            previousHint = new Hint(List.of(' ', ' ', ' ', ' ', ' '));
+        }
+
         checkHintAndMarksSize(previousHint, marks);
         checkWordAndMarksSize(word, marks);
 
@@ -38,6 +42,8 @@ public class Hint {
     public Hint(List<Character> hint) {
         this.hint = hint;
     }
+
+    public List<Character> getHint() { return hint; }
 
     @Override
     public boolean equals(Object o) {
