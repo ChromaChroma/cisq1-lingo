@@ -1,6 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidHintException;
+import nl.hu.cisq1.lingo.trainer.exception.InvalidHintException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +13,19 @@ public class Hint {
         if (previousHint == null) {
             previousHint = new Hint(List.of(' ', ' ', ' ', ' ', ' '));
         }
-
         checkHintAndMarksSize(previousHint, marks);
         checkWordAndMarksSize(word, marks);
+        return new Hint(createHintCharachters(word, previousHint, marks));
+    }
 
+    private static void checkHintAndMarksSize(Hint previousHint, List<Mark> marks) {
+        if (previousHint.hint.size() != marks.size()) throw new InvalidHintException("Previous hint and marks arent the same size");
+    }
+    private static void checkWordAndMarksSize(String word, List<Mark> marks) {
+        if (word.length() != marks.size()) throw new InvalidHintException("Word and marks arent the same size");
+    }
+
+    private static List<Character> createHintCharachters(String word, Hint previousHint, List<Mark> marks) {
         List<Character> resChars = new ArrayList<>();
         char[] wordChars = word.toCharArray();
         for (int i = 0; i < previousHint.hint.size(); i ++) {
@@ -29,14 +38,7 @@ public class Hint {
                 resChars.add('.');
             }
         }
-        return new Hint(resChars);
-    }
-
-    private static void checkHintAndMarksSize(Hint previousHint, List<Mark> marks) {
-        if (previousHint.hint.size() != marks.size()) throw new InvalidHintException("Previous hint and marks arent the same size");
-    }
-    private static void checkWordAndMarksSize(String word, List<Mark> marks) {
-        if (word.length() != marks.size()) throw new InvalidHintException("Word and marks arent the same size");
+        return resChars;
     }
 
     public Hint(List<Character> hint) {
@@ -53,15 +55,4 @@ public class Hint {
         return Objects.equals(hint, hint1.hint);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(hint);
-    }
-
-    @Override
-    public String toString() {
-        return "Hint{" +
-                "hint=" + hint +
-                '}';
-    }
 }

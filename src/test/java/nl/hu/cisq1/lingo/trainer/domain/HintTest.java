@@ -1,6 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidHintException;
+import nl.hu.cisq1.lingo.trainer.exception.InvalidHintException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -54,14 +54,14 @@ class HintTest {
     @DisplayName("Hint.of() makes only first letter visible if invalid")
     void hintFirstLetterVisibleWhenInvalid() {
         Hint hint = Hint.of(new Hint(List.of('w', 'o', '.', '.', '.')), "woord", List.of(Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID));
-        assertTrue(hint.toString().contains(List.of('w', 'o', '.', '.', '.').toString()));
+        assertEquals(List.of('w', 'o', '.', '.', '.'), hint.getHint());
     }
 
     @Test
     @DisplayName("Hint.of() Returns hint with just the correct letters visible when previous hint is null")
     void hintReturnsHintJustCorrectLettersWithPreviousHintNull() {
         Hint hint = Hint.of(null, "woord", List.of(Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.PRESENT, Mark.CORRECT));
-        assertEquals(List.of('w', '.', '.', '.', 'd'), hint.getHint());
+        assertEquals(List.of('.', '.', '.', '.', 'd'), hint.getHint());
     }
 
     static Stream<Arguments> provideUnequalLengthsHintExamples() {
