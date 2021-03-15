@@ -1,6 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.trainer.domain.exception.IllegalRoundStateException;
+import nl.hu.cisq1.lingo.trainer.exception.IllegalRoundStateException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +74,10 @@ public class Round {
             else chars.add('.');
         }
         return chars;
+    }
+
+    public Integer wordLength() {
+        return word.length();
     }
 
     public Map<Integer, Turn> getTurns() { return turns; }

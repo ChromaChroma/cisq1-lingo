@@ -1,6 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.trainer.domain.exception.IllegalRoundStateException;
+import nl.hu.cisq1.lingo.trainer.exception.IllegalRoundStateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -223,4 +223,18 @@ class RoundTest {
         assertEquals(currentTurn, round.getCurrentTurn());
     }
 
+    static Stream<Arguments> provideWordForWordLengthExamples() {
+        return Stream.of(
+                Arguments.of("woord"),
+                Arguments.of("woorde"),
+                Arguments.of("woorden")
+                );
+    }
+    @ParameterizedTest
+    @MethodSource("provideWordForWordLengthExamples")
+    @DisplayName("getCurrentRound returns most recent turn with no word guess done yet in the round")
+    void getWordLength(String word) {
+        Round round = Round.of(word);
+        assertEquals(word.length(), round.wordLength());
+    }
 }
