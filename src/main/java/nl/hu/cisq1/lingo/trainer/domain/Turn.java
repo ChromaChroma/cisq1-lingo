@@ -2,7 +2,6 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Turn {
     private Feedback feedback;
@@ -64,18 +63,5 @@ public class Turn {
             marks.add(Mark.INVALID);
         }
         return marks;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Turn turn = (Turn) o;
-        return Objects.equals(feedback, turn.feedback);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(feedback);
     }
 }

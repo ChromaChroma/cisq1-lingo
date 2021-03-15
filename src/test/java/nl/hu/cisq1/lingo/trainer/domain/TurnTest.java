@@ -83,7 +83,7 @@ class TurnTest {
     void makeInvalidGuesses(String word, String guess, List<Mark> expected) {
         turn.takeGuess(word, guess);
         assertEquals(
-                turn.getFeedback().marks,
+                turn.getFeedback().getMarks(),
                 expected
         );
     }
