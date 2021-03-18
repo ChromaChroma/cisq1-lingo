@@ -14,19 +14,22 @@ public class Game {
     private GameState state;
     private List<Round> rounds;
     private Score score;
+    private Integer wordLength;
 
     public static Game create() {
         return new Game(
                 UUID.randomUUID(),
                 Score.empty(),
-                new ArrayList<>()
+                new ArrayList<>(),
+                5
         );
     }
 
-    public Game(UUID id, Score score, List<Round> rounds) {
+    public Game(UUID id, Score score, List<Round> rounds, Integer wordLength) {
         this.id = id;
         this.score = score;
         this.rounds = rounds;
+        this.wordLength = wordLength;
         this.state = new AwaitingRoundGameState();
     }
 
@@ -53,4 +56,8 @@ public class Game {
     public List<Round> getRounds() { return rounds; }
 
     public void setState(GameState state) { this.state = state; }
+
+    public Integer getWordLength() { return wordLength; }
+
+    public void setWordLength(Integer wordLength) { this.wordLength = wordLength; }
 }

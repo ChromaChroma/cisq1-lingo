@@ -15,13 +15,36 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
     @Test
+    @DisplayName("Game wordLength correct")
+    void gameWordLength() {
+        Game game = Game.create();
+        game.startNewRound("woord");
+        assertEquals(5, game.getWordLength());
+    }
+
+    @Test
+    @DisplayName("Game wordLength ++ after correct guess")
+    void gameWordLengthUp() throws NotFoundException {
+        Game game = Game.create();
+        
+        game.startNewRound("woord");
+        game.guessWord("woord");
+        assertEquals(6, game.getWordLength());
+
+        game.startNewRound("woord");
+        game.guessWord("woord");
+        assertEquals(7, game.getWordLength());
+    }
+
+    @Test
     @DisplayName("Game constructor with correct args")
     void correctConstructor() {
         assertDoesNotThrow(
                 () -> new Game(
                         UUID.randomUUID(),
                         Score.empty(),
-                        new ArrayList<>()
+                        new ArrayList<>(),
+                        5
                 )
         );
     }
@@ -38,7 +61,7 @@ class GameTest {
     @DisplayName("Test get score returns correct score")
     void getGameScore() {
         Score score = new Score(5, 2);
-        Game game = new Game( UUID.randomUUID(), score, new ArrayList<>());
+        Game game = new Game( UUID.randomUUID(), score, new ArrayList<>(), 5);
         assertEquals(score, game.getScore());
     }
 
@@ -46,7 +69,7 @@ class GameTest {
     @DisplayName("Test get id returns correct uuid")
     void getGameId() {
         UUID uuid = UUID.randomUUID();
-        Game game = new Game( uuid, Score.empty(), new ArrayList<>());
+        Game game = new Game( uuid, Score.empty(), new ArrayList<>(), 5);
         assertEquals(uuid, game.getId());
     }
 
