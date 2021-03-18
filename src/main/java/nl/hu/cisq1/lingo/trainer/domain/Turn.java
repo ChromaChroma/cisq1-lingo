@@ -28,7 +28,7 @@ public class Turn {
         return word.length() == guess.length();
     }
 
-    private List<Mark> generateMarks(String guess, String word) {
+    private List<Mark> generateMarks(String word, String guess) {
         List<Mark> marks = new ArrayList<>();
         char[] wordChars = word.toCharArray();
         for (int index = 0; index < wordChars.length; index++){

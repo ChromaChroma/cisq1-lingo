@@ -154,14 +154,14 @@ class RoundTest {
     void getLastHintReturnsMostRecentHint() {
         Round round = Round.of("woord");
         round.takeGuess("wursd");
-        assertEquals(List.of('w', '.', '.', '.', 'd'), round.getLastHint().getHint());
+        assertEquals(List.of('w', '.', '.', '.', 'd'), round.getLastHint().getHintSequence());
     }
 
     @Test
     @DisplayName("getLastHint returns null when no guesses made")
     void getLastHintWithNoGuesses() {
         Round round = Round.of("woord");
-        assertEquals(List.of('w', '.', '.', '.', '.'), round.getLastHint().getHint());
+        assertEquals(List.of('w', '.', '.', '.', '.'), round.getLastHint().getHintSequence());
     }
 
     @Test
@@ -173,7 +173,7 @@ class RoundTest {
         round.takeGuess("sdsdd");
         round.takeGuess("noper");
         round.takeGuess("yikes");
-        assertEquals(List.of('w', 'o', '.', '.', 'd'), round.getLastHint().getHint());
+        assertEquals(List.of('w', 'o', '.', '.', 'd'), round.getLastHint().getHintSequence());
     }
 
     static Stream<Arguments> provideCurrentRoundExamples() {

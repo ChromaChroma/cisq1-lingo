@@ -21,7 +21,7 @@ public class ActiveGameState implements GameState {
     @Override
     public Feedback guessWord(Game game, String guess) throws NotFoundException {
         Round round = getCurrentRound(game.getRounds());
-        Feedback feedback = round.takeGuess(guess);;
+        Feedback feedback = round.takeGuess(guess);
         if (round.getState().equals(RoundState.WON)) {
             game.setState(new AwaitingRoundGameState());
             updateGameWordLength(game);

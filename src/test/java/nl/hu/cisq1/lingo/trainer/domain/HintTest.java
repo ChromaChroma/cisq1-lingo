@@ -53,14 +53,14 @@ class HintTest {
     @DisplayName("Hint.of() makes only first letter visible if invalid")
     void hintFirstLetterVisibleWhenInvalid() {
         Hint hint = Hint.of(new Hint(List.of('w', 'o', '.', '.', '.')), "woord", List.of(Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID));
-        assertEquals(List.of('w', 'o', '.', '.', '.'), hint.getHint());
+        assertEquals(List.of('w', 'o', '.', '.', '.'), hint.getHintSequence());
     }
 
     @Test
     @DisplayName("Hint.of() Returns hint with just the correct letters visible when previous hint is null")
     void hintReturnsHintJustCorrectLettersWithPreviousHintNull() {
         Hint hint = Hint.of(null, "woord", List.of(Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.PRESENT, Mark.CORRECT));
-        assertEquals(List.of('.', '.', '.', '.', 'd'), hint.getHint());
+        assertEquals(List.of('.', '.', '.', '.', 'd'), hint.getHintSequence());
     }
 
     static Stream<Arguments> provideUnequalLengthsHintExamples() {

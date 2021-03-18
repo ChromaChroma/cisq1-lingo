@@ -60,9 +60,10 @@ class FeedbackTest {
     @Test
     @DisplayName("Guess is invalid if guess length is not same as word length")
     void guessIsInvalid() {
+        List<Mark> marks = List.of(Mark.CORRECT);
         assertThrows(
                 InvalidFeedbackException.class,
-                () -> new Feedback("woord", List.of(Mark.CORRECT))
+                () -> new Feedback("woord", marks)
         );
     }
 
