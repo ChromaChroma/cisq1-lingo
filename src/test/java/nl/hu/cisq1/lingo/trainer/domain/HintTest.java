@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HintTest {
-
     static Stream<Arguments> provideHintExamples() {
         return Stream.of(
                 Arguments.of(
@@ -100,6 +99,11 @@ class HintTest {
                         "woord",
                         List.of(Mark. CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT),
                         new Hint(List.of('w', '.', '.', '.', '.', '.'))
+                ),
+                Arguments.of(
+                        "woord",
+                        List.of(Mark. CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT),
+                        new Hint(List.of('w', '.', '.', '.', '.', '.'))
                 )
         );
     }
@@ -144,5 +148,32 @@ class HintTest {
         assertDoesNotThrow(
                 () -> Hint.of(previousHint, guess, marks)
         );
+    }
+
+    static Stream<Arguments> provideEqualsExamples() {
+        Hint sameHint = new Hint(List.of('w', '.', '.', '.', '.'));
+        return Stream.of(
+                Arguments.of(
+                        sameHint,
+                        sameHint,
+                        true
+                ),
+                Arguments.of(
+                        new Hint(List.of('w', '.', '.', '.', '.')),
+                        new Hint(List.of('w', '.', '.', '.', '.')),
+                        true
+                ),
+                Arguments.of(
+                        new Hint(List.of('w', '.', '.', '.', '.')),
+                        null,
+                        false
+                )
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("provideEqualsExamples")
+    @DisplayName("Test hint Equals method")
+    void equalLengthWordMarksHint(Hint mainHint, Hint compareHint, boolean isEqual) {
+        assertEquals(mainHint.equals(compareHint), isEqual);
     }
 }

@@ -34,6 +34,10 @@ class GameTest {
         game.startNewRound("woord");
         game.guessWord("woord");
         assertEquals(7, game.getWordLength());
+
+        game.startNewRound("woord");
+        game.guessWord("woord");
+        assertEquals(5, game.getWordLength());
     }
 
     @Test

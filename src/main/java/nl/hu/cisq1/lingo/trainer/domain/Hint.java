@@ -13,15 +13,19 @@ public class Hint {
         if (previousHint == null) {
             previousHint = new Hint(List.of(' ', ' ', ' ', ' ', ' '));
         }
-        checkHintAndMarksSize(previousHint, marks);
-        checkWordAndMarksSize(word, marks);
+
+        checkWordAndHintSameSize(word, previousHint);
+        checkWordAndMarksSameSize(word, marks);
         return new Hint(createHintCharachters(word, previousHint, marks));
+
+
     }
 
-    private static void checkHintAndMarksSize(Hint previousHint, List<Mark> marks) {
-        if (previousHint.hint.size() != marks.size()) throw new InvalidHintException("Previous hint and marks arent the same size");
+    private static void checkWordAndHintSameSize(String word, Hint previousHint) {
+        if (word.length() != previousHint.hint.size()) throw new InvalidHintException("Previous hint and marks arent the same size");
     }
-    private static void checkWordAndMarksSize(String word, List<Mark> marks) {
+
+    private static void checkWordAndMarksSameSize(String word,  List<Mark> marks) {
         if (word.length() != marks.size()) throw new InvalidHintException("Word and marks arent the same size");
     }
 
@@ -54,5 +58,4 @@ public class Hint {
         Hint hint1 = (Hint) o;
         return Objects.equals(hint, hint1.hint);
     }
-
 }
