@@ -22,9 +22,19 @@ public class ActiveGameState implements GameState {
     public Feedback guessWord(Game game, String guess) throws NotFoundException {
         Round round = getCurrentRound(game.getRounds());
         Feedback feedback = round.takeGuess(guess);;
-        if (round.getState().equals(RoundState.WON)) game.setState(new AwaitingRoundGameState());
+        if (round.getState().equals(RoundState.WON)) {
+            game.setState(new AwaitingRoundGameState());
+            updateGameWordLength(game);
+        }
         if (round.getState().equals(RoundState.LOST)) game.setState(new GameOverGameState());
         return feedback;
+    }
+
+    private void updateGameWordLength(Game game) {
+        Integer wordLength = game.getWordLength();
+        if (wordLength >= 5 && wordLength < 7) wordLength++;
+        else wordLength = 5;
+        game.setWordLength(wordLength);
     }
 
     @Override
