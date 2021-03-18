@@ -58,4 +58,9 @@ public class Hint {
         Hint hint1 = (Hint) o;
         return Objects.equals(hintSequence, hint1.hintSequence);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hintSequence);
+    }
 }

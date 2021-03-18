@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -175,5 +176,10 @@ class HintTest {
     @DisplayName("Test hint Equals method")
     void equalLengthWordMarksHint(Hint mainHint, Hint compareHint, boolean isEqual) {
         assertEquals(mainHint.equals(compareHint), isEqual);
+
+        if (compareHint != null) {
+            assertEquals(Objects.equals(mainHint.hashCode(), compareHint.hashCode()), isEqual);
+        }
+
     }
 }
