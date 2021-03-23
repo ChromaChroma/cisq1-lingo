@@ -168,6 +168,11 @@ class HintTest {
                         new Hint(List.of('w', '.', '.', '.', '.')),
                         null,
                         false
+                ),
+                Arguments.of(
+                        new Hint(List.of('w', '.', '.', '.', '.')),
+                        new Hint(List.of('w', 't', 't', '.', '.')),
+                        false
                 )
         );
     }
@@ -180,6 +185,5 @@ class HintTest {
         if (compareHint != null) {
             assertEquals(Objects.equals(mainHint.hashCode(), compareHint.hashCode()), isEqual);
         }
-
     }
 }
