@@ -4,6 +4,7 @@ import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.domain.Round;
 import nl.hu.cisq1.lingo.trainer.domain.RoundState;
 import nl.hu.cisq1.lingo.trainer.domain.Score;
+import nl.hu.cisq1.lingo.trainer.domain.game.strategy.DefaultWordLengthStrategy;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalGameStateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,7 @@ class GameTest {
                         UUID.randomUUID(),
                         Score.empty(),
                         new ArrayList<>(),
-                        5
+                        new DefaultWordLengthStrategy(5)
                 )
         );
     }
@@ -65,7 +66,7 @@ class GameTest {
     @DisplayName("Test get score returns correct score")
     void getGameScore() {
         Score score = new Score(5, 2);
-        Game game = new Game( UUID.randomUUID(), score, new ArrayList<>(), 5);
+        Game game = new Game( UUID.randomUUID(), score, new ArrayList<>(), new DefaultWordLengthStrategy(5));
         assertEquals(score, game.getScore());
     }
 
@@ -73,7 +74,7 @@ class GameTest {
     @DisplayName("Test get id returns correct uuid")
     void getGameId() {
         UUID uuid = UUID.randomUUID();
-        Game game = new Game( uuid, Score.empty(), new ArrayList<>(), 5);
+        Game game = new Game( uuid, Score.empty(), new ArrayList<>(), new DefaultWordLengthStrategy(5));
         assertEquals(uuid, game.getId());
     }
 
