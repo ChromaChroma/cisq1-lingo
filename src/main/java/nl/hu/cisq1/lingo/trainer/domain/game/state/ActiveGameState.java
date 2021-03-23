@@ -3,6 +3,7 @@ package nl.hu.cisq1.lingo.trainer.domain.game.state;
 import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.domain.*;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
+import nl.hu.cisq1.lingo.trainer.domain.game.strategy.WordLengthStrategy;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalGameStateException;
 
 import java.util.List;
@@ -31,9 +32,8 @@ public class ActiveGameState implements GameState {
     }
 
     private void updateGameWordLength(Game game) {
-        Integer wordLength = game.getWordLength();
-        if (wordLength >= 5 && wordLength < 7) wordLength++;
-        else wordLength = 5;
+        WordLengthStrategy wordLength = game.getWordLength();
+        wordLength.next();
         game.setWordLength(wordLength);
     }
 
