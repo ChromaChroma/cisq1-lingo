@@ -1,6 +1,5 @@
 package nl.hu.cisq1.lingo.trainer.domain.game.state;
 
-import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.domain.*;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
 import nl.hu.cisq1.lingo.trainer.domain.game.strategy.DefaultWordLengthStrategy;
@@ -36,19 +35,7 @@ class ActiveGameStateTest {
     void startNewRoundThrows() {
         assertThrows(
                 IllegalGameStateException.class,
-                () -> game.startNewRound("woord")
-        );
-    }
-
-    @Test
-    @DisplayName("get turn, find active round in list over completed rounds and throw")
-    void gameActiveAndThrowWhenFindCurrentRoundInEmptyList() {
-        for(Round round : game.getRounds()) {
-            round.setState(RoundState.LOST);
-        }
-        assertThrows(
-                NotFoundException.class,
-                game::getCurrentTurn
+                () -> new ActiveGameState().startNewRound("woord", game)
         );
     }
 
@@ -57,7 +44,7 @@ class ActiveGameStateTest {
     void gameActiveStateGetCurrentTurn() {
         assertDoesNotThrow(
                 () -> {
-                    Turn turn = game.getCurrentTurn();
+                    Turn turn = new ActiveGameState().getCurrentTurn(game);
                     assertNull(turn.getFeedback());
                 }
         );
@@ -68,7 +55,7 @@ class ActiveGameStateTest {
     void gameActiveStateGetLatestHint() {
         assertDoesNotThrow(
                 () -> {
-                    Hint hint = game.latestHint();
+                    Hint hint = new ActiveGameState().latestHint(game);
                     assertNotNull(hint);
                 }
         );
@@ -80,7 +67,7 @@ class ActiveGameStateTest {
 
         assertDoesNotThrow(
                 () -> {
-                    Feedback feedback = game.guessWord("woord");
+                    Feedback feedback = new ActiveGameState().guessWord(game, "woord");
                     assertNotNull(feedback);
                 }
         );
@@ -93,13 +80,13 @@ class ActiveGameStateTest {
         assertDoesNotThrow(
                 () -> {
                     for (int i = 0; i < 5; i++) {
-                        game.guessWord("wrong");
+                        new ActiveGameState().guessWord(game, "wrong");
                     }
                 }
         );
         assertThrows(
                 IllegalGameStateException.class,
-                () -> game.guessWord("wrong")
+                () -> game.guessWord( "wrong")
         );
     }
 
@@ -108,7 +95,7 @@ class ActiveGameStateTest {
     void gameActiveStateGuessWordNull() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> game.guessWord(null)
+                () -> new ActiveGameState().guessWord(game, null)
         );
     }
 }
