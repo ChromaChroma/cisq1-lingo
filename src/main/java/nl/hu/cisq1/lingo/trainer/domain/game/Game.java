@@ -1,31 +1,51 @@
 package nl.hu.cisq1.lingo.trainer.domain.game;
 
 import javassist.NotFoundException;
+import nl.hu.cisq1.lingo.trainer.data.converter.GameStateConverter;
+import nl.hu.cisq1.lingo.trainer.data.converter.WordLengthConverter;
 import nl.hu.cisq1.lingo.trainer.domain.*;
 import nl.hu.cisq1.lingo.trainer.domain.game.state.AwaitingRoundGameState;
 import nl.hu.cisq1.lingo.trainer.domain.game.state.GameState;
+import nl.hu.cisq1.lingo.trainer.domain.game.strategy.DefaultWordLengthStrategy;
+import nl.hu.cisq1.lingo.trainer.domain.game.strategy.WordLengthStrategy;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "game")
 public class Game {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private GameState state;
-    private List<Round> rounds;
+
+    @Transient
     private Score score;
-    private Integer wordLength;
+
+    @Column(name = "game_state")
+    @Convert(converter = GameStateConverter.class)
+    private GameState state;
+
+    @Column(name = "word_length")
+    @Convert(converter = WordLengthConverter.class)
+    private WordLengthStrategy wordLength;
+
+    @Column(name = "game_state")
+    @Transient
+    private List<Round> rounds;
 
     public static Game create() {
         return new Game(
                 UUID.randomUUID(),
                 Score.empty(),
                 new ArrayList<>(),
-                5
+                new DefaultWordLengthStrategy()
         );
     }
 
-    public Game(UUID id, Score score, List<Round> rounds, Integer wordLength) {
+    public Game(UUID id, Score score, List<Round> rounds, WordLengthStrategy wordLength) {
         this.id = id;
         this.score = score;
         this.rounds = rounds;
@@ -57,7 +77,7 @@ public class Game {
 
     public void setState(GameState state) { this.state = state; }
 
-    public Integer getWordLength() { return wordLength; }
+    public WordLengthStrategy getWordLength() { return wordLength; }
 
-    public void setWordLength(Integer wordLength) { this.wordLength = wordLength; }
+    public void setWordLength(WordLengthStrategy wordLength) { this.wordLength = wordLength; }
 }
