@@ -30,7 +30,7 @@ public class Turn {
 
     private List<Mark> generateMarks(String word, String guess) {
         List<Mark> marks = new ArrayList<>();
-        for (char ignored : word.toCharArray()) marks.add(Mark.CORRECT);
+        for (int i = 0; i < word.toCharArray().length; i++) marks.add(Mark.CORRECT);
         char[] guessArray = guess.toCharArray();
         for (int i = 0; i < guessArray.length; i++) {
             int characterIndex = word.indexOf(guessArray[i]);
