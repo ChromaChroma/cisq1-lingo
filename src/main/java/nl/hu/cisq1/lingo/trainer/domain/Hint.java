@@ -2,23 +2,34 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.exception.InvalidHintException;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
+@Entity
+@Table(name = "hint")
 public class Hint {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "hint_character",
+            joinColumns = @JoinColumn(name = "hint_id")
+    )
+    @Column(name = "sequence_character")
     private List<Character> hintSequence;
 
     static Hint of(Hint previousHint, String word, List<Mark> marks) {
         if (previousHint == null) {
             previousHint = new Hint(List.of(' ', ' ', ' ', ' ', ' '));
         }
-
         checkWordAndHintSameSize(word, previousHint);
         checkWordAndMarksSameSize(word, marks);
         return new Hint(createHintCharachters(word, previousHint, marks));
-
-
     }
 
     private static void checkWordAndHintSameSize(String word, Hint previousHint) {
@@ -45,6 +56,7 @@ public class Hint {
         return resChars;
     }
 
+    public Hint() { }
     public Hint(List<Character> hint) {
         this.hintSequence = hint;
     }

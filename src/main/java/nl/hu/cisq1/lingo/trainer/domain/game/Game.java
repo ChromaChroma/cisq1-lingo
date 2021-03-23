@@ -33,7 +33,10 @@ public class Game {
     private WordLengthStrategy wordLength;
 
     @Column(name = "game_state")
-    @Transient
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<Round> rounds;
 
     public static Game create() {

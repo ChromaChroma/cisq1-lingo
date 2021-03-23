@@ -2,14 +2,27 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.exception.IllegalRoundStateException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import javax.persistence.*;
+import java.util.*;
 
+@Entity
+@Table(name = "round")
 public class Round {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+    @Column(name = "state")
+    @Enumerated(EnumType.STRING)
     private RoundState state;
+
+    @Column(name = "word")
     private String word;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "round_turn_mapping",
+            joinColumns = {@JoinColumn(name = "round_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "turn_id", referencedColumnName = "id")})
     private Map<Integer, Turn> turns;
 
     public static Round of(String word) {
@@ -20,6 +33,7 @@ public class Round {
         return new Round(word, turns);
     }
 
+    public Round() { }
     public Round(String word, Map<Integer, Turn> turns)  {
         this.word = word;
         this.turns = new TreeMap<>(turns);

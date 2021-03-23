@@ -1,13 +1,23 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+@Entity
+@Table(name = "turn")
 public class Turn {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+    @Transient
     private Feedback feedback;
 
-    public Turn() {
-        this.feedback = null;
+    public Turn() { }
+    public Turn(Feedback feedback) {
+        this.feedback = feedback;
     }
 
     public Feedback getFeedback() { return feedback; }
