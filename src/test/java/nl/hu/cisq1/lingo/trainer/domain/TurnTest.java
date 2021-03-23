@@ -24,40 +24,50 @@ class TurnTest {
         return Stream.of(
                 Arguments.of(
                         "woord",
-                        "woord"
+                        "woord",
+                        List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)
                 ),Arguments.of(
                         "woord",
-                        "marge"
+                        "marge",
+                        List.of(Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT)
                 ),Arguments.of(
                         "woord",
-                        "waden"
+                        "waden",
+                        List.of(Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT)
                 ),Arguments.of(
                         "woorde",
-                        "woorde"
+                        "woorde",
+                        List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)
                 ),Arguments.of(
                         "woorde",
-                        "marges"
+                        "marges",
+                        List.of(Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT)
                 ),Arguments.of(
                         "woorde",
-                        "wadden"
+                        "wadden",
+                        List.of(Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT)
                 ),Arguments.of(
                         "woorden",
-                        "woorden"
+                        "woorden",
+                        List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)
                 ),Arguments.of(
                         "woorden",
-                        "magiers"
+                        "magiers",
+                        List.of(Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.PRESENT, Mark.ABSENT)
                 ),Arguments.of(
                         "woorden",
-                        "waddens"
+                        "waddens",
+                        List.of(Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.PRESENT, Mark.PRESENT, Mark.ABSENT)
                 )
         );
     }
     @ParameterizedTest
     @MethodSource("provideTurnGuesses")
     @DisplayName("Make correct and non invalid guesses")
-    void makeNonInvalidGuesses(String word, String guess) {
+    void makeNonInvalidGuesses(String word, String guess, List<Mark> marks) {
         turn.takeGuess(word, guess);
         assertNotNull(turn.getFeedback());
+        assertEquals(marks, turn.getFeedback().getMarks());
     }
 
     static Stream<Arguments> provideInvalidSizedTurnGuesses() {
