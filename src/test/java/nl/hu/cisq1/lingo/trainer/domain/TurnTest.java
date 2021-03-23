@@ -81,10 +81,10 @@ class TurnTest {
     @MethodSource("provideInvalidSizedTurnGuesses")
     @DisplayName("Invalid guesses return Turn with feedback with INVALID marks")
     void makeInvalidGuesses(String word, String guess, List<Mark> expected) {
-        turn.takeGuess(word, guess);
+        Feedback feedback = turn.takeGuess(word, guess);
         assertEquals(
-                turn.getFeedback().getMarks(),
-                expected
+                expected,
+               feedback.getMarks()
         );
     }
 
