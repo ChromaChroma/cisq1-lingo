@@ -7,6 +7,7 @@ import nl.hu.cisq1.lingo.trainer.domain.game.strategy.WordLengthStrategy;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalGameStateException;
 
 import java.util.List;
+import java.util.Map;
 
 public class ActiveGameState implements GameState {
     @Override
@@ -21,20 +22,47 @@ public class ActiveGameState implements GameState {
 
     @Override
     public Feedback guessWord(Game game, String guess) throws NotFoundException {
-        Round round = getCurrentRound(game.getRounds());
-        Feedback feedback = round.takeGuess(guess);
-        if (round.getState().equals(RoundState.WON)) {
-            game.setState(new AwaitingRoundGameState());
-            updateGameWordLength(game);
-        }
-        if (round.getState().equals(RoundState.LOST)) game.setState(new GameOverGameState());
+        Round currentRound = getCurrentRound(game.getRounds());
+        Feedback feedback = currentRound.takeGuess(guess);
+        if (currentRound.getState().equals(RoundState.LOST)) updateGameOnRoundLost(game);
+        if (currentRound.getState().equals(RoundState.WON)) updateGameOnRoundWin(game, currentRound);
+
         return feedback;
+    }
+
+    private void updateGameOnRoundLost(Game game) {
+        game.getScore().increaseRoundsPlayed();
+        game.setState(new GameOverGameState());
+    }
+
+    private void updateGameOnRoundWin(Game game, Round currentRound) {
+        updateGameWordLength(game);
+        updateGameScore(game, currentRound);
+        game.setState(new AwaitingRoundGameState());
     }
 
     private void updateGameWordLength(Game game) {
         WordLengthStrategy wordLength = game.getWordLength();
         wordLength.next();
         game.setWordLength(wordLength);
+    }
+
+    private void updateGameScore(Game game, Round currentRound) {
+        Score score = game.getScore();
+        score.increaseRoundsPlayed();
+        Integer winScore = calculateRoundScore(currentRound);
+        score.increasePoints(winScore);
+    }
+
+    private Integer calculateRoundScore(Round currentRound) {
+        int initialMultiplier = 5,
+            initialAddition = 5,
+            maxRounds = 5,
+            attempts = 0;
+        for (Map.Entry<Integer, Turn> entry : currentRound.getTurns().entrySet()) {
+            if (entry.getValue().getFeedback() != null) attempts++;
+        }
+        return initialMultiplier*(maxRounds - attempts) + initialAddition;
     }
 
     @Override
