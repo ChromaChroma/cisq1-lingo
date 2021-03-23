@@ -40,17 +40,19 @@ public class Game {
         return new Game(
                 UUID.randomUUID(),
                 Score.empty(),
+                new AwaitingRoundGameState(),
                 new ArrayList<>(),
                 new DefaultWordLengthStrategy()
         );
     }
 
-    public Game(UUID id, Score score, List<Round> rounds, WordLengthStrategy wordLength) {
+    public Game() { }
+    public Game(UUID id, Score score, GameState state, List<Round> rounds, WordLengthStrategy wordLength) {
         this.id = id;
         this.score = score;
+        this.state = state;
         this.rounds = rounds;
         this.wordLength = wordLength;
-        this.state = new AwaitingRoundGameState();
     }
 
     public Round startNewRound(String word) {
