@@ -15,8 +15,8 @@ public class DefaultWordLengthStrategy implements WordLengthStrategy{
                 6, 7,
                 7, 5
         );
-        if (initialLength == null || initialLength < 5 || initialLength > 7) this.currentWordLength = 5;
-        else this.currentWordLength = initialLength;
+        if (initialLength == null || initialLength < 5 || initialLength > 7)  initialLength = 5;
+        this.currentWordLength = initialLength;
     }
 
     @Override
