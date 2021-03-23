@@ -3,7 +3,6 @@ package nl.hu.cisq1.lingo.trainer.domain.game.state;
 import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.domain.*;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
-import nl.hu.cisq1.lingo.trainer.domain.game.strategy.WordLengthStrategy;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalGameStateException;
 
 import java.util.List;
@@ -42,9 +41,7 @@ public class ActiveGameState implements GameState {
     }
 
     private void updateGameWordLength(Game game) {
-        WordLengthStrategy wordLength = game.getWordLength();
-        wordLength.next();
-        game.setWordLength(wordLength);
+        game.getWordLength().next();
     }
 
     private void updateGameScore(Game game, Round currentRound) {
@@ -55,10 +52,10 @@ public class ActiveGameState implements GameState {
     }
 
     private Integer calculateRoundScore(Round currentRound) {
-        int initialMultiplier = 5,
-            initialAddition = 5,
-            maxRounds = 5,
-            attempts = 0;
+        int initialMultiplier = 5;
+        int initialAddition = 5;
+        int maxRounds = 5;
+        int attempts = 0;
         for (Map.Entry<Integer, Turn> entry : currentRound.getTurns().entrySet()) {
             if (entry.getValue().getFeedback() != null) attempts++;
         }
