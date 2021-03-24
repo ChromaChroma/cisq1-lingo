@@ -3,7 +3,10 @@ package nl.hu.cisq1.lingo.trainer.domain.game;
 import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.data.converter.GameStateConverter;
 import nl.hu.cisq1.lingo.trainer.data.converter.WordLengthConverter;
-import nl.hu.cisq1.lingo.trainer.domain.*;
+import nl.hu.cisq1.lingo.trainer.domain.Hint;
+import nl.hu.cisq1.lingo.trainer.domain.Round;
+import nl.hu.cisq1.lingo.trainer.domain.Score;
+import nl.hu.cisq1.lingo.trainer.domain.Turn;
 import nl.hu.cisq1.lingo.trainer.domain.game.state.AwaitingRoundGameState;
 import nl.hu.cisq1.lingo.trainer.domain.game.state.GameState;
 import nl.hu.cisq1.lingo.trainer.domain.game.strategy.DefaultWordLengthStrategy;
@@ -21,7 +24,7 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Transient
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private Score score;
 
     @Column(name = "game_state")
@@ -62,7 +65,7 @@ public class Game {
         return state.startNewRound(word, this);
     }
 
-    public Feedback guessWord(String guess) throws NotFoundException {
+    public Hint guessWord(String guess) throws NotFoundException {
         return state.guessWord(this, guess);
     }
 
