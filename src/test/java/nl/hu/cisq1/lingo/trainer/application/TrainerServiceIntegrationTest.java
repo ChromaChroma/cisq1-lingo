@@ -3,7 +3,10 @@ package nl.hu.cisq1.lingo.trainer.application;
 import nl.hu.cisq1.lingo.CiTestConfiguration;
 import nl.hu.cisq1.lingo.trainer.data.repository.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -15,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Import(CiTestConfiguration.class)
-@Tag("Integration")
 class TrainerServiceIntegrationTest {
     private Game game;
 
@@ -27,8 +29,7 @@ class TrainerServiceIntegrationTest {
 
     @BeforeEach
     void setup() {
-        this.game = Game.create();
-        this.game = this.repository.save(game);
+        this.game = this.repository.save(Game.create());
     }
 
     @AfterEach
