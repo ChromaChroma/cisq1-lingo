@@ -35,9 +35,10 @@ class GameStateConverterTest {
     @Test
     @DisplayName("null input throws null pointer exception")
     void nullInputThrowsException() {
+        GameStateConverter converter = new GameStateConverter();
         assertThrows(
                 NullPointerException.class,
-                () -> new GameStateConverter().convertToDatabaseColumn(null)
+                () -> converter.convertToDatabaseColumn(null)
         );
     }
 

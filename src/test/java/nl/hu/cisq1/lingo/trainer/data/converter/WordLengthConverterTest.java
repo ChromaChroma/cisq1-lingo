@@ -38,9 +38,10 @@ class WordLengthConverterTest {
     @Test
     @DisplayName("null input throws null pointer exception")
     void nullInputThrowsException() {
+        WordLengthConverter converter = new WordLengthConverter();
         assertThrows(
                 NullPointerException.class,
-                () -> new WordLengthConverter().convertToDatabaseColumn(null)
+                () -> converter.convertToDatabaseColumn(null)
         );
     }
 
