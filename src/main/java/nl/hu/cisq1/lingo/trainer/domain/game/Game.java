@@ -86,6 +86,4 @@ public class Game {
     public void setState(GameState state) { this.state = state; }
 
     public WordLengthStrategy getWordLength() { return wordLength; }
-
-    public void setWordLength(WordLengthStrategy wordLength) { this.wordLength = wordLength; }
 }
