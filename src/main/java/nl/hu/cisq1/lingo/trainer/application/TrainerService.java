@@ -2,7 +2,6 @@ package nl.hu.cisq1.lingo.trainer.application;
 
 import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.data.repository.SpringGameRepository;
-import nl.hu.cisq1.lingo.trainer.domain.Feedback;
 import nl.hu.cisq1.lingo.trainer.domain.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.Round;
 import nl.hu.cisq1.lingo.trainer.domain.Turn;
@@ -25,9 +24,7 @@ public class TrainerService {
     }
 
     public Game startNewGame() {
-        Game game = Game.create();
-        this.gameRepository.save(game);
-        return game;
+        return this.gameRepository.save(Game.create());
     }
 
     private Game findGameById(UUID id) throws NotFoundException {
@@ -43,12 +40,11 @@ public class TrainerService {
         return round;
     }
 
-
-    public Feedback guessWord(UUID gameId, String guess) throws NotFoundException {
+    public Hint guessWord(UUID gameId, String guess) throws NotFoundException {
         Game game = findGameById(gameId);
-        Feedback feedback = game.guessWord(guess);
+        Hint hint = game.guessWord(guess);
         this.gameRepository.save(game);
-        return feedback;
+        return hint;
     }
 
     public Turn getCurrentTurn(UUID gameId) throws NotFoundException {
