@@ -29,7 +29,6 @@ public class ExceptionHandlerController {
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<Map<String, String>> e(Exception e) {
         HashMap<String, String> map = new HashMap<>();
-        e.printStackTrace();
         map.put("Error", e.getMessage());
         return new ResponseEntity<>(map, HttpStatus.CONFLICT);
     }
