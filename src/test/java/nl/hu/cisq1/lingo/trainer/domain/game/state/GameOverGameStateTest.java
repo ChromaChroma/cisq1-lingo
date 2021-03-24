@@ -30,36 +30,40 @@ class GameOverGameStateTest {
     @Test
     @DisplayName("throws when trying to create a new round")
     void startNewRoundThrows() {
+        GameState state = new GameOverGameState();
         assertThrows(
                 IllegalGameStateException.class,
-                () -> new GameOverGameState().startNewRound("woord", game)
+                () -> state.startNewRound("woord", game)
         );
     }
 
     @Test
     @DisplayName("get current turn throws")
     void getCurrentTurnThrows() {
+        GameState state = new GameOverGameState();
         assertThrows(
                 IllegalGameStateException.class,
-                () -> new GameOverGameState().getCurrentTurn(game)
+                () -> state.getCurrentTurn(game)
         );
     }
 
     @Test
     @DisplayName("get latest hint throws")
     void getLatestHintThrows() {
+        GameState state = new GameOverGameState();
         assertThrows(
                 IllegalGameStateException.class,
-                () -> new GameOverGameState().latestHint(game)
+                () -> state.latestHint(game)
         );
     }
 
     @Test
     @DisplayName("guess word throws")
     void guessWordThrows() {
+        GameState state = new GameOverGameState();
         assertThrows(
                 IllegalGameStateException.class,
-                () -> new GameOverGameState().guessWord(game, "woord")
+                () -> state.guessWord(game, "woord")
         );
     }
 }

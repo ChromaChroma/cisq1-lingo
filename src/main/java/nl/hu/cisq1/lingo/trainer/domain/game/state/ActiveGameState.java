@@ -20,13 +20,13 @@ public class ActiveGameState implements GameState {
     }
 
     @Override
-    public Feedback guessWord(Game game, String guess) throws NotFoundException {
+    public Hint guessWord(Game game, String guess) throws NotFoundException {
+        if (guess == null || !guess.matches("[a-zA-Z]+\\.?")) throw new IllegalArgumentException("Only letters allowed");
         Round currentRound = getCurrentRound(game.getRounds());
-        Feedback feedback = currentRound.takeGuess(guess);
+        currentRound.takeGuess(guess.toLowerCase());
         if (currentRound.getState().equals(RoundState.LOST)) updateGameOnRoundLost(game);
         if (currentRound.getState().equals(RoundState.WON)) updateGameOnRoundWin(game, currentRound);
-
-        return feedback;
+        return currentRound.getLastHint();
     }
 
     private void updateGameOnRoundLost(Game game) {

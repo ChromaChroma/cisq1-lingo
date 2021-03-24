@@ -43,27 +43,30 @@ class AwaitingRoundGameStateTest {
     @Test
     @DisplayName("get current turn throws")
     void getCurrentTurnThrows() {
+        GameState state = new AwaitingRoundGameState();
         assertThrows(
                 IllegalGameStateException.class,
-                () -> new AwaitingRoundGameState().getCurrentTurn(game)
+                () -> state.getCurrentTurn(game)
         );
     }
 
     @Test
     @DisplayName("get latest hint throws")
     void getLatestHintThrows() {
+        GameState state = new AwaitingRoundGameState();
         assertThrows(
                 IllegalGameStateException.class,
-                () -> new AwaitingRoundGameState().latestHint(game)
+                () -> state.latestHint(game)
         );
     }
 
     @Test
     @DisplayName("guess word throws")
     void guessWordThrows() {
+        GameState state = new AwaitingRoundGameState();
         assertThrows(
                 IllegalGameStateException.class,
-                () -> new AwaitingRoundGameState().guessWord(game, "woord")
+                () -> state.guessWord(game, "woord")
         );
     }
 }

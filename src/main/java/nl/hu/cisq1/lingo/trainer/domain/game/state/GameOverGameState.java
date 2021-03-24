@@ -1,6 +1,5 @@
 package nl.hu.cisq1.lingo.trainer.domain.game.state;
 
-import nl.hu.cisq1.lingo.trainer.domain.Feedback;
 import nl.hu.cisq1.lingo.trainer.domain.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.Round;
 import nl.hu.cisq1.lingo.trainer.domain.Turn;
@@ -19,7 +18,7 @@ public class GameOverGameState implements GameState{
     }
 
     @Override
-    public Feedback guessWord(Game game, String guess) {
+    public Hint guessWord(Game game, String guess) {
         throw new IllegalGameStateException("Cannot guess word when game is over");
     }
 
