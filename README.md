@@ -9,3 +9,10 @@ After each guess a hint will return which letters are right, which are wrong and
 
 ## Domain
 ![image](lingo-domain.png)
+
+## Tests
+This project is tested with Unit and Integration tests
+Dependencies used:
+* SonarCloud
+* JaCoCo
+* PITest (mvnw org.pitest:pitest-maven:mutationCoverage)
