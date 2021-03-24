@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain.game.state;
 
+import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.domain.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.Round;
 import nl.hu.cisq1.lingo.trainer.domain.Score;
@@ -66,6 +67,23 @@ class ActiveGameStateTest {
                     Hint hint = new ActiveGameState().latestHint(game);
                     assertNotNull(hint);
                 }
+        );
+    }
+
+    @Test
+    @DisplayName("Throw when get latest hint with no existing round")
+    void throwOnGetHintWithNoROund() {
+        Game game = new Game(
+                UUID.randomUUID(),
+                Score.empty(),
+                new ActiveGameState(),
+                new ArrayList<>(),
+                new DefaultWordLengthStrategy(5)
+        );
+        assertThrows(
+                NotFoundException.class,
+                () -> new ActiveGameState().latestHint(game)
+
         );
     }
 
