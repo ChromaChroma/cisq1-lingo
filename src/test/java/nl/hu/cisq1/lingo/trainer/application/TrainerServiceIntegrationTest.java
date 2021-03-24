@@ -41,7 +41,12 @@ class TrainerServiceIntegrationTest {
     @Test
     @DisplayName("Start a new game")
     void startNewGame() {
-        assertDoesNotThrow(service::startNewGame);
+        assertDoesNotThrow(
+                () -> {
+            Game game = service.startNewGame();
+            this.repository.findById(game.getId());
+        });
+
     }
 
     @Test
