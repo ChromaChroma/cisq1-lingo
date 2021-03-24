@@ -17,7 +17,7 @@ class TurnTest {
 
     @BeforeEach
     void setUp() {
-        this.turn = new Turn();
+        this.turn = new Turn(null);
     }
 
     static Stream<Arguments> provideTurnGuesses() {
