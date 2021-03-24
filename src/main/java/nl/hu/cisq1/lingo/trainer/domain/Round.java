@@ -68,7 +68,7 @@ public class Round {
         return false;
     }
 
-    public Hint getLastHint() {
+    public Hint getLatestHint() {
         Integer lastHintTurnIndex = null;
         Hint hint = new Hint(buildInitialHintList());
         for (Map.Entry<Integer, Turn> entry : turns.entrySet()) {

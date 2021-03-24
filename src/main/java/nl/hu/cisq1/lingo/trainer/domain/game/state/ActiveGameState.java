@@ -26,7 +26,7 @@ public class ActiveGameState implements GameState {
         currentRound.takeGuess(guess.toLowerCase());
         if (currentRound.getState().equals(RoundState.LOST)) updateGameOnRoundLost(game);
         if (currentRound.getState().equals(RoundState.WON)) updateGameOnRoundWin(game, currentRound);
-        return currentRound.getLastHint();
+        return currentRound.getLatestHint();
     }
 
     private void updateGameOnRoundLost(Game game) {
@@ -64,7 +64,7 @@ public class ActiveGameState implements GameState {
 
     @Override
     public Hint latestHint(Game game) throws NotFoundException {
-        return getCurrentRound(game.getRounds()).getLastHint();
+        return getCurrentRound(game.getRounds()).getLatestHint();
     }
 
     private Round getCurrentRound(List<Round> rounds) throws NotFoundException {
