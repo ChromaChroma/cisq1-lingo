@@ -3,7 +3,10 @@ package nl.hu.cisq1.lingo.trainer.domain.game;
 import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.data.converter.GameStateConverter;
 import nl.hu.cisq1.lingo.trainer.data.converter.WordLengthConverter;
-import nl.hu.cisq1.lingo.trainer.domain.*;
+import nl.hu.cisq1.lingo.trainer.domain.Hint;
+import nl.hu.cisq1.lingo.trainer.domain.Round;
+import nl.hu.cisq1.lingo.trainer.domain.RoundState;
+import nl.hu.cisq1.lingo.trainer.domain.Score;
 import nl.hu.cisq1.lingo.trainer.domain.game.state.AwaitingRoundGameState;
 import nl.hu.cisq1.lingo.trainer.domain.game.state.GameState;
 import nl.hu.cisq1.lingo.trainer.domain.game.strategy.DefaultWordLengthStrategy;
@@ -70,10 +73,6 @@ public class Game {
 
     public Hint latestHint() throws NotFoundException {
         return state.latestHint(this);
-    }
-
-    public Turn getCurrentTurn() throws NotFoundException {
-        return state.getCurrentTurn(this);
     }
 
     public Round getCurrentRound() throws NotFoundException {

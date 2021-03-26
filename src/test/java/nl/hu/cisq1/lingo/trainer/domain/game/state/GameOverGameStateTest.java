@@ -38,16 +38,6 @@ class GameOverGameStateTest {
     }
 
     @Test
-    @DisplayName("get current turn throws")
-    void getCurrentTurnThrows() {
-        GameState state = new GameOverGameState();
-        assertThrows(
-                IllegalGameStateException.class,
-                () -> state.getCurrentTurn(game)
-        );
-    }
-
-    @Test
     @DisplayName("get latest hint throws")
     void getLatestHintThrows() {
         GameState state = new GameOverGameState();

@@ -1,7 +1,10 @@
 package nl.hu.cisq1.lingo.trainer.domain.game.state;
 
 import javassist.NotFoundException;
-import nl.hu.cisq1.lingo.trainer.domain.*;
+import nl.hu.cisq1.lingo.trainer.domain.Hint;
+import nl.hu.cisq1.lingo.trainer.domain.Round;
+import nl.hu.cisq1.lingo.trainer.domain.RoundState;
+import nl.hu.cisq1.lingo.trainer.domain.Score;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalGameStateException;
 
@@ -11,22 +14,18 @@ public class ActiveGameState implements GameState {
         throw new IllegalGameStateException("Cannot start new round when a round is already active");
     }
 
-    @Override
-    public Turn getCurrentTurn(Game game) throws NotFoundException {
-        return game.getCurrentRound().getCurrentTurn();
-    }
 
     @Override
     public Hint guessWord(Game game, String guess) throws NotFoundException {
         if (guess == null || !guess.matches("[a-zA-Z]+\\.?")) throw new IllegalArgumentException("Only letters allowed");
         Round currentRound = game.getCurrentRound();
         currentRound.takeGuess(guess.toLowerCase());
-        if (currentRound.getState().equals(RoundState.LOST)) updateGameOnRoundLost(game);
+        if (currentRound.getState().equals(RoundState.LOST)) updateAndEndGameOnRoundLost(game);
         else if (currentRound.getState().equals(RoundState.WON)) updateGameOnRoundWin(game, currentRound);
         return currentRound.getLatestHint();
     }
 
-    private void updateGameOnRoundLost(Game game) {
+    private void updateAndEndGameOnRoundLost(Game game) {
         game.getScore().increaseRoundsPlayed();
         game.setState(new GameOverGameState());
     }

@@ -4,7 +4,6 @@ import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.domain.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.Round;
 import nl.hu.cisq1.lingo.trainer.domain.Score;
-import nl.hu.cisq1.lingo.trainer.domain.Turn;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
 import nl.hu.cisq1.lingo.trainer.domain.game.strategy.DefaultWordLengthStrategy;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalGameStateException;
@@ -45,17 +44,6 @@ class ActiveGameStateTest {
         assertThrows(
                 IllegalGameStateException.class,
                 () -> state.startNewRound("woord", game)
-        );
-    }
-
-    @Test
-    @DisplayName("get current turn")
-    void gameActiveStateGetCurrentTurn() {
-        assertDoesNotThrow(
-                () -> {
-                    Turn turn = new ActiveGameState().getCurrentTurn(game);
-                    assertNull(turn.getFeedback());
-                }
         );
     }
 

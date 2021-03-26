@@ -34,20 +34,10 @@ class AwaitingRoundGameStateTest {
         assertDoesNotThrow(
                 () -> {
                     new AwaitingRoundGameState().startNewRound("woord", game);
-                    assertNotNull(game.getCurrentTurn());
+                    assertNotNull(game.getCurrentRound());
                 }
         );
 
-    }
-
-    @Test
-    @DisplayName("get current turn throws")
-    void getCurrentTurnThrows() {
-        GameState state = new AwaitingRoundGameState();
-        assertThrows(
-                IllegalGameStateException.class,
-                () -> state.getCurrentTurn(game)
-        );
     }
 
     @Test

@@ -2,7 +2,6 @@ package nl.hu.cisq1.lingo.trainer.domain.game.state;
 
 import nl.hu.cisq1.lingo.trainer.domain.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.Round;
-import nl.hu.cisq1.lingo.trainer.domain.Turn;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalGameStateException;
 
@@ -10,11 +9,6 @@ public class GameOverGameState implements GameState{
     @Override
     public Round startNewRound(String word, Game game) {
         throw new IllegalGameStateException("Cannot start round when game is over");
-    }
-
-    @Override
-    public Turn getCurrentTurn(Game game) {
-        throw new IllegalGameStateException("Cannot get current turn when game is over");
     }
 
     @Override
