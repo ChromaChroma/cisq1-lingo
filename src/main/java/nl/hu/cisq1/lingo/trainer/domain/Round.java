@@ -34,7 +34,7 @@ public class Round {
     }
 
     public Round() { }
-    public Round(String word, Map<Integer, Turn> turns)  {
+    public Round(String word, Map<Integer, Turn> turns) {
         this.word = word;
         this.turns = new TreeMap<>(turns);
         this.state = RoundState.ACTIVE;
@@ -62,28 +62,23 @@ public class Round {
     }
 
     private boolean hasTurnsLeft() {
-        for (Map.Entry<Integer, Turn> entry : turns.entrySet()) {
-            if (entry.getValue().getFeedback() == null) return true;
-        }
-        return false;
+        return turns.values().stream()
+                .anyMatch(turn -> turn.getFeedback() == null);
     }
 
     public Hint getLatestHint() {
-        Integer lastHintTurnIndex = null;
         Hint hint = new Hint(buildInitialHintList());
-        for (Map.Entry<Integer, Turn> entry : turns.entrySet()) {
-            if (entry.getValue().getFeedback() != null) {
-                hint = entry.getValue().getFeedback().giveHint(hint);
-                lastHintTurnIndex = entry.getKey();
+        for (Turn turn : turns.values()) {
+            if (turn.getFeedback() != null) {
+                hint = turn.getFeedback().giveHint(hint);
             }
         }
-        if (lastHintTurnIndex == null) return hint;
-        return this.turns.get(lastHintTurnIndex).getFeedback().giveHint(hint);
+        return hint;
     }
 
     private List<Character> buildInitialHintList() {
         List<Character> chars = new ArrayList<>();
-        for (int i = 0; i <  word.toCharArray().length; i++){
+        for (int i = 0; i < word.toCharArray().length; i++) {
             if (i == 0) chars.add(i, word.charAt(i));
             else chars.add('.');
         }
@@ -94,9 +89,15 @@ public class Round {
         return word.length();
     }
 
-    public Map<Integer, Turn> getTurns() { return turns; }
+    public Map<Integer, Turn> getTurns() {
+        return turns;
+    }
 
-    public RoundState getState() { return state; }
+    public RoundState getState() {
+        return state;
+    }
 
-    public void setState(RoundState state) { this.state = state; }
+    public void setState(RoundState state) {
+        this.state = state;
+    }
 }
