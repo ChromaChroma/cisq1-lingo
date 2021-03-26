@@ -18,7 +18,6 @@ public class ExceptionHandlerController {
     @ExceptionHandler(value = WordLengthNotSupportedException.class)
     public ResponseEntity<Map<String, String>> wlnse(Exception e) {
         HashMap<String, String> map = new HashMap<>();
-        e.printStackTrace();
         map.put("Error", e.getMessage());
         return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
     }

@@ -26,13 +26,13 @@ class HintTest {
                         "woord",
                         List.of(Mark. CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.PRESENT, Mark.CORRECT),
                         new Hint(List.of('w', '.', '.', '.', 'd')),
-                        new Hint(List.of('w', '.', '.', '.', 'd'))
+                        new Hint(List.of('w', '.', '*', '*', 'd'))
                 ),
                 Arguments.of(
                         "woord",
                         List.of(Mark. CORRECT, Mark.ABSENT, Mark.CORRECT, Mark.PRESENT, Mark.CORRECT),
                         new Hint(List.of('w', '.', '.', '.', 'd')),
-                        new Hint(List.of('w', '.', 'o', '.', 'd'))
+                        new Hint(List.of('w', '.', 'o', '*', 'd'))
                 ),
                 Arguments.of(
                         "woord",
@@ -61,7 +61,7 @@ class HintTest {
     @DisplayName("Hint.of() Returns hint with just the correct letters visible when previous hint is null")
     void hintReturnsHintJustCorrectLettersWithPreviousHintNull() {
         Hint hint = Hint.of(null, "woord", List.of(Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.PRESENT, Mark.CORRECT));
-        assertEquals(List.of('.', '.', '.', '.', 'd'), hint.getHintSequence());
+        assertEquals(List.of('.', '.', '*', '*', 'd'), hint.getHintSequence());
     }
 
     static Stream<Arguments> provideUnequalLengthsHintExamples() {

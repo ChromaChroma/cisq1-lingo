@@ -4,7 +4,6 @@ import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.data.repository.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.Round;
-import nl.hu.cisq1.lingo.trainer.domain.Turn;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import org.springframework.stereotype.Service;
@@ -45,10 +44,6 @@ public class TrainerService {
         Hint hint = game.guessWord(guess);
         this.gameRepository.save(game);
         return hint;
-    }
-
-    public Turn getCurrentTurn(UUID gameId) throws NotFoundException {
-        return findGameById(gameId).getCurrentTurn();
     }
 
     public Hint getLatestHint(UUID gameId) throws NotFoundException {

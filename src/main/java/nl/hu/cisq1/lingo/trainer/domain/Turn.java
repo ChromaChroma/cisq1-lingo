@@ -12,7 +12,7 @@ public class Turn {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
     private Feedback feedback;
 
     public Turn() { }

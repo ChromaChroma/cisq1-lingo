@@ -71,14 +71,6 @@ class TrainerServiceIntegrationTest {
     }
 
     @Test
-    @DisplayName("Get the current turn")
-    void getCurrentTurn() {
-        UUID gameId = this.game.getId();
-        assertDoesNotThrow(() -> service.startNewRound(gameId));
-        assertDoesNotThrow(() -> service.getCurrentTurn(gameId));
-    }
-
-    @Test
     @DisplayName("Get the latest hint")
     void getLatestHint() {
         UUID gameId = this.game.getId();

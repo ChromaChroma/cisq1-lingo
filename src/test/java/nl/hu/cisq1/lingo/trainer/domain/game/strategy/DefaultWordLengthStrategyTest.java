@@ -49,7 +49,6 @@ class DefaultWordLengthStrategyTest {
     @DisplayName("5, 6, 7 will return the next in turn word length, other outside this range or null returns length of 6 (first after default start value)")
     void assertNextMethodValue(Integer length, Integer expected) {
         WordLengthStrategy lengthStrategy = new DefaultWordLengthStrategy(length);
-        lengthStrategy.next();
-        assertEquals(expected, lengthStrategy.currentLength());
+        assertEquals(expected, lengthStrategy.next());
     }
 }

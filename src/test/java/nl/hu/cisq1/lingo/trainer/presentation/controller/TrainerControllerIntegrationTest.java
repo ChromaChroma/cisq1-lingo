@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.stream.Stream;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -41,7 +42,6 @@ class TrainerControllerIntegrationTest {
         this.repository.deleteAll();
     }
 
-
     @Test
     @DisplayName("Start a new game")
     void startGame() throws Exception {
@@ -49,7 +49,12 @@ class TrainerControllerIntegrationTest {
                 .post("/trainer/games");
 
         mockMvc.perform(request)
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.points").value(0))
+                .andExpect(jsonPath("$.roundsPlayed").value(0))
+                .andExpect(jsonPath("$.wordLength").value(5));
+
     }
 
     @Test
@@ -60,7 +65,8 @@ class TrainerControllerIntegrationTest {
                 .post("/trainer/games/{gameId}/rounds", game.getId());
 
         mockMvc.perform(request)
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.hint").exists());
     }
 
     @Test
@@ -80,12 +86,15 @@ class TrainerControllerIntegrationTest {
     void guessWord() throws Exception {
         Game game = service.startNewGame();
         service.startNewRound(game.getId());
+        String word = "woord";
         RequestBuilder request = MockMvcRequestBuilders
                 .post("/trainer/games/{gameId}/guess", game.getId())
-                .content("woord");
+                .content(word);
 
         mockMvc.perform(request)
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.hint").exists())
+                .andExpect(jsonPath("$.guess").value(word));
     }
 
     @ParameterizedTest
@@ -139,42 +148,6 @@ class TrainerControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("Request the current turn")
-    void getCurrentTurn() throws Exception {
-        Game game = service.startNewGame();
-        service.startNewRound(game.getId());
-        RequestBuilder request = MockMvcRequestBuilders
-                .get("/trainer/games/{gameId}/turn", game.getId());
-
-        mockMvc.perform(request)
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("409 if requesting the current turn when no active round")
-    void getCurrentTurnWithNoActiveRound() throws Exception {
-        Game game = service.startNewGame();
-        RequestBuilder request = MockMvcRequestBuilders
-                .get("/trainer/games/{gameId}/turn", game.getId());
-
-        mockMvc.perform(request)
-                .andExpect(status().isConflict());
-    }
-
-    @Test
-    @DisplayName("409 if requesting the current turn when game over")
-    void getCurrentTurnWhenGameOver() throws Exception {
-        Game game = Game.create();
-        game.setState(new GameOverGameState());
-        this.repository.save(game);
-        RequestBuilder request = MockMvcRequestBuilders
-                .get("/trainer/games/{gameId}/turn", game.getId());
-
-        mockMvc.perform(request)
-                .andExpect(status().isConflict());
-    }
-
-    @Test
     @DisplayName("Request the latest hint")
     void getLatestHint() throws Exception {
         Game game = service.startNewGame();
@@ -183,7 +156,8 @@ class TrainerControllerIntegrationTest {
                 .get("/trainer/games/{gameId}/hint", game.getId());
 
         mockMvc.perform(request)
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.hint").exists());
     }
 
     @Test

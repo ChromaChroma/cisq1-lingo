@@ -154,7 +154,7 @@ class RoundTest {
     void getLastHintReturnsMostRecentHint() {
         Round round = Round.of("woord");
         round.takeGuess("wursd");
-        assertEquals(List.of('w', '.', '.', '.', 'd'), round.getLatestHint().getHintSequence());
+        assertEquals(List.of('w', '.', '*', '.', 'd'), round.getLatestHint().getHintSequence());
     }
 
     @Test

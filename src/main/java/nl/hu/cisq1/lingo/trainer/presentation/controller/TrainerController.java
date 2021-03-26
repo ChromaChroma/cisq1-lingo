@@ -3,9 +3,10 @@ package nl.hu.cisq1.lingo.trainer.presentation.controller;
 import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.application.TrainerService;
 import nl.hu.cisq1.lingo.trainer.domain.Hint;
-import nl.hu.cisq1.lingo.trainer.domain.Turn;
+import nl.hu.cisq1.lingo.trainer.domain.Round;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
 import nl.hu.cisq1.lingo.trainer.presentation.dto.GameResponse;
+import nl.hu.cisq1.lingo.trainer.presentation.dto.RoundResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,26 +35,27 @@ public class TrainerController {
     }
 
     @PostMapping("/games/{gameId}/rounds")
-    public ResponseEntity<Void> startNewRound( @PathVariable UUID gameId) throws NotFoundException {
-        this.trainerService.startNewRound(gameId);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<RoundResponse> startNewRound(@PathVariable UUID gameId) throws NotFoundException {
+        Round round = this.trainerService.startNewRound(gameId);
+        RoundResponse response = new RoundResponse();
+        response.hint = round.getLatestHint().getHintSequence();
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/games/{gameId}/guess")
-    public ResponseEntity<Hint> guessWord( @PathVariable UUID gameId, @RequestBody String guess) throws NotFoundException {
+    public ResponseEntity<RoundResponse> guessWord( @PathVariable UUID gameId, @RequestBody String guess) throws NotFoundException {
         Hint hint = this.trainerService.guessWord(gameId, guess);
-        return new ResponseEntity<>(hint, HttpStatus.OK);
-    }
-
-    @GetMapping("/games/{gameId}/turn")
-    public ResponseEntity<Turn> getCurrentTurn( @PathVariable UUID gameId) throws NotFoundException {
-        Turn turn = this.trainerService.getCurrentTurn(gameId);
-        return new ResponseEntity<>(turn, HttpStatus.OK);
+        RoundResponse response = new RoundResponse();
+        response.hint = hint.getHintSequence();
+        response.guess = guess;
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/games/{gameId}/hint")
-    public ResponseEntity<Hint> getLatestHint( @PathVariable UUID gameId) throws NotFoundException {
+    public ResponseEntity<RoundResponse> getLatestHint( @PathVariable UUID gameId) throws NotFoundException {
         Hint hint = this.trainerService.getLatestHint(gameId);
-        return new ResponseEntity<>(hint, HttpStatus.OK);
+        RoundResponse response = new RoundResponse();
+        response.hint = hint.getHintSequence();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

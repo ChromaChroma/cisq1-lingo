@@ -26,13 +26,13 @@ class FeedbackTest {
                         "woord",
                         List.of(Mark. CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.PRESENT, Mark.CORRECT),
                         new Hint(List.of('w', '.', '.', '.', 'd')),
-                        new Hint(List.of('w', '.', '.', '.', 'd'))
+                        new Hint(List.of('w', '.', '*', '*', 'd'))
                 ),
                 Arguments.of(
                         "woord",
                         List.of(Mark. CORRECT, Mark.ABSENT, Mark.CORRECT, Mark.PRESENT, Mark.CORRECT),
                         new Hint(List.of('w', '.', '.', '.', 'd')),
-                        new Hint(List.of('w', '.', 'o', '.', 'd'))
+                        new Hint(List.of('w', '.', 'o', '*', 'd'))
                 ),
                 Arguments.of(
                         "woord",

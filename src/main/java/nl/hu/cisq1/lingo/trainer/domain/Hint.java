@@ -2,25 +2,12 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.exception.InvalidHintException;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
-@Entity
-@Table(name = "hint")
+
 public class Hint {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-
-    @ElementCollection
-    @CollectionTable(
-            name = "hint_character",
-            joinColumns = @JoinColumn(name = "hint_id")
-    )
-    @Column(name = "sequence_character")
     private List<Character> hintSequence;
 
     static Hint of(Hint previousHint, String word, List<Mark> marks) {
@@ -45,18 +32,14 @@ public class Hint {
         char[] wordChars = word.toCharArray();
         for (int i = 0; i < previousHint.hintSequence.size(); i ++) {
             String charString = previousHint.hintSequence.get(i).toString();
-            if (charString.matches("[a-zA-Z]+\\.?")){
-                resChars.add(i, previousHint.hintSequence.get(i));
-            }else if (marks.get(i) == Mark.CORRECT){
-                resChars.add(wordChars[i]);
-            } else {
-                resChars.add('.');
-            }
+            if (charString.matches("[a-zA-Z]+\\.?")) resChars.add(i, previousHint.hintSequence.get(i));
+            else if (marks.get(i) == Mark.CORRECT) resChars.add(wordChars[i]);
+            else if (marks.get(i) == Mark.PRESENT) resChars.add('*');
+            else resChars.add('.');
         }
         return resChars;
     }
 
-    public Hint() { }
     public Hint(List<Character> hint) {
         this.hintSequence = hint;
     }
