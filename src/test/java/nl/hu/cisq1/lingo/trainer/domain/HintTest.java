@@ -122,17 +122,17 @@ class HintTest {
         return Stream.of(
                 Arguments.of(
                         "woord",
-                        List.of(Mark. CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT),
+                        List.of(Mark. CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.CORRECT),
                         new Hint(List.of('w', '.', '.', '.', '.'))
                 ),
                 Arguments.of(
                         "woorde",
-                        List.of(Mark. CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT),
+                        List.of(Mark. CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.CORRECT, Mark.CORRECT),
                         new Hint(List.of('w', '.', '.', '.', '.', '.'))
                 ),
                 Arguments.of(
                         "woorden",
-                        List.of(Mark. CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT),
+                        List.of(Mark. CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT, Mark.PRESENT),
                         new Hint(List.of('w', '.', '.', '.', '.', '.', '.'))
                 ),
                 Arguments.of(
