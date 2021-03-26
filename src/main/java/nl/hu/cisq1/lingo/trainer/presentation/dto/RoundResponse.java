@@ -6,6 +6,19 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RoundResponse {
-    public List<Character> hint;
-    public String guess;
+    private final List<Character> hint;
+    private final String guess;
+
+    public RoundResponse(List<Character> hint, String guess) {
+        this.hint = hint;
+        this.guess = guess;
+    }
+
+    public List<Character> getHint() {
+        return hint;
+    }
+
+    public String getGuess() {
+        return guess;
+    }
 }
