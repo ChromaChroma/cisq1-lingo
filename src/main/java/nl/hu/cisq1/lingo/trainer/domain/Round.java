@@ -4,10 +4,15 @@ import nl.hu.cisq1.lingo.trainer.exception.IllegalRoundStateException;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Entity
 @Table(name = "round")
 public class Round {
+    private static final int AMOUNT_OF_ATTEMPTS = 5;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -26,11 +31,12 @@ public class Round {
     private Map<Integer, Turn> turns;
 
     public static Round of(String word) {
-        Map<Integer, Turn> turns = new TreeMap<>();
-        for (int turnIndex = 1; turnIndex <= 5; turnIndex++) {
-            turns.put(turnIndex, new Turn());
-        }
-        return new Round(word, turns);
+        return new Round(
+                word,
+                IntStream.range(0, AMOUNT_OF_ATTEMPTS)
+                        .boxed()
+                        .collect(Collectors.toMap(Function.identity(), turn -> new Turn()))
+        );
     }
 
     public Round() { }
@@ -55,8 +61,11 @@ public class Round {
     }
 
     private void checkRoundState(Turn turn) {
-        if (turn.getFeedback().isWordGuessed()) this.state = RoundState.WON;
-        if (!turn.getFeedback().isWordGuessed() && !hasTurnsLeft()) this.state = RoundState.LOST;
+        if (turn.getFeedback().isWordGuessed()) {
+            this.state = RoundState.WON;
+        } else if (!turn.getFeedback().isWordGuessed() && !hasTurnsLeft()) {
+            this.state = RoundState.LOST;
+        }
     }
 
     private boolean hasTurnsLeft() {
