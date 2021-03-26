@@ -5,8 +5,6 @@ import nl.hu.cisq1.lingo.trainer.domain.*;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalGameStateException;
 
-import java.util.Map;
-
 public class ActiveGameState implements GameState {
     @Override
     public Round startNewRound(String word, Game game) {
@@ -33,7 +31,7 @@ public class ActiveGameState implements GameState {
         game.setState(new GameOverGameState());
     }
 
-    private void updateGameOnRoundWin(Game game, Round currentRound){
+    private void updateGameOnRoundWin(Game game, Round currentRound) {
         updateGameScore(game, currentRound);
         game.setState(new AwaitingRoundGameState());
     }
@@ -45,15 +43,20 @@ public class ActiveGameState implements GameState {
         score.increasePoints(winScore);
     }
 
-    private Integer calculateRoundScore(Round currentRound) {
+    private Integer calculateRoundScore(Round round) {
         int initialMultiplier = 5;
         int initialAddition = 5;
         int maxRounds = 5;
-        int attempts = 0;
-        for (Map.Entry<Integer, Turn> entry : currentRound.getTurns().entrySet()) {
-            if (entry.getValue().getFeedback() != null) attempts++;
-        }
-        return initialMultiplier*(maxRounds - attempts) + initialAddition;
+        int attempts = calculateAttemptsMade(round);
+        return initialMultiplier * (maxRounds - attempts) + initialAddition;
+    }
+
+    private int calculateAttemptsMade(Round round) {
+        return (int) round.getTurns()
+                .values()
+                .stream()
+                .filter(turn -> turn.getFeedback() != null)
+                .count();
     }
 
     @Override
