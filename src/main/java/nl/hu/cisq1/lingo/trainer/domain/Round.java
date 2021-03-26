@@ -41,12 +41,10 @@ public class Round {
     }
 
     public Turn getCurrentTurn() {
-        if (this.state.equals(RoundState.ACTIVE)) {
-            for (Map.Entry<Integer, Turn> entry : turns.entrySet()) {
-                if (entry.getValue().getFeedback() == null) return entry.getValue();
-            }
-        }
-        throw new IllegalRoundStateException("Round is not active anymore");
+        return turns.values().stream()
+                .filter(turn -> turn.getFeedback() == null)
+                .findFirst()
+                .orElseThrow(() -> new IllegalRoundStateException("Round is not active anymore"));
     }
 
     public Feedback takeGuess(String guess) {
