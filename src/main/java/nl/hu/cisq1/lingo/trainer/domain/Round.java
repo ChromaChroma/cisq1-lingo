@@ -63,7 +63,7 @@ public class Round {
     private void checkRoundState(Turn turn) {
         if (turn.getFeedback().isWordGuessed()) {
             this.state = RoundState.WON;
-        } else if (!turn.getFeedback().isWordGuessed() && !hasTurnsLeft()) {
+        } else if (!hasTurnsLeft()) {
             this.state = RoundState.LOST;
         }
     }
