@@ -23,7 +23,7 @@ class AwaitingRoundGameStateTest {
                 Score.empty(),
                 new AwaitingRoundGameState(),
                 new ArrayList<>(),
-                new DefaultWordLengthStrategy(5)
+                new DefaultWordLengthStrategy()
         );
     }
 

@@ -5,15 +5,18 @@ import nl.hu.cisq1.lingo.trainer.domain.game.strategy.WordLengthStrategy;
 
 import javax.persistence.AttributeConverter;
 
-public class WordLengthConverter  implements AttributeConverter<WordLengthStrategy, Integer> {
+public class WordLengthConverter  implements AttributeConverter<WordLengthStrategy, String> {
     @Override
-    public Integer convertToDatabaseColumn(WordLengthStrategy wordLengthStrategy) {
-        if (wordLengthStrategy!= null) return wordLengthStrategy.currentLength();
-        throw new NullPointerException();
+    public String convertToDatabaseColumn(WordLengthStrategy wordLengthStrategy) {
+        return wordLengthStrategy.getClass().getSimpleName().toUpperCase();
     }
 
     @Override
-    public WordLengthStrategy convertToEntityAttribute(Integer wordLengthStrategy) {
-        return new DefaultWordLengthStrategy(wordLengthStrategy);
+    public WordLengthStrategy convertToEntityAttribute(String wordLengthStrategy) {
+        return switch (wordLengthStrategy.toUpperCase()) {
+            case "DEFAULTWORDLENGTHSTRATEGY" -> new DefaultWordLengthStrategy();
+            default -> new DefaultWordLengthStrategy();
+        };
+
     }
 }

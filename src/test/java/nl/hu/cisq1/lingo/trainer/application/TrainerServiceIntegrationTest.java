@@ -29,7 +29,7 @@ class TrainerServiceIntegrationTest {
 
     @BeforeEach
     void setup() {
-        this.game = this.repository.save(Game.create());
+        this.game = this.repository.save(Game.createDefault());
     }
 
     @AfterEach

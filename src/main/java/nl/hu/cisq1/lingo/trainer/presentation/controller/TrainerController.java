@@ -30,7 +30,6 @@ public class TrainerController {
         response.id = game.getId();
         response.points = game.getScore().getPoints();
         response.roundsPlayed = game.getScore().getRoundsPlayed();
-        response.wordLength = game.getWordLength().currentLength();
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

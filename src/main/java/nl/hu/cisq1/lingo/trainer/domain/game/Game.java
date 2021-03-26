@@ -3,10 +3,7 @@ package nl.hu.cisq1.lingo.trainer.domain.game;
 import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.data.converter.GameStateConverter;
 import nl.hu.cisq1.lingo.trainer.data.converter.WordLengthConverter;
-import nl.hu.cisq1.lingo.trainer.domain.Hint;
-import nl.hu.cisq1.lingo.trainer.domain.Round;
-import nl.hu.cisq1.lingo.trainer.domain.Score;
-import nl.hu.cisq1.lingo.trainer.domain.Turn;
+import nl.hu.cisq1.lingo.trainer.domain.*;
 import nl.hu.cisq1.lingo.trainer.domain.game.state.AwaitingRoundGameState;
 import nl.hu.cisq1.lingo.trainer.domain.game.state.GameState;
 import nl.hu.cisq1.lingo.trainer.domain.game.strategy.DefaultWordLengthStrategy;
@@ -33,7 +30,7 @@ public class Game {
 
     @Column(name = "word_length")
     @Convert(converter = WordLengthConverter.class)
-    private WordLengthStrategy wordLength;
+    private WordLengthStrategy wordLengthStrategy;
 
     @Column(name = "game_state")
     @OneToMany(
@@ -42,7 +39,7 @@ public class Game {
     )
     private List<Round> rounds;
 
-    public static Game create() {
+    public static Game createDefault() {
         return new Game(
                 UUID.randomUUID(),
                 Score.empty(),
@@ -52,13 +49,15 @@ public class Game {
         );
     }
 
-    public Game() { }
-    public Game(UUID id, Score score, GameState state, List<Round> rounds, WordLengthStrategy wordLength) {
+    public Game() {
+    }
+
+    public Game(UUID id, Score score, GameState state, List<Round> rounds, WordLengthStrategy wordLengthStrategy) {
         this.id = id;
         this.score = score;
         this.state = state;
         this.rounds = rounds;
-        this.wordLength = wordLength;
+        this.wordLengthStrategy = wordLengthStrategy;
     }
 
     public Round startNewRound(String word) {
@@ -77,13 +76,36 @@ public class Game {
         return state.getCurrentTurn(this);
     }
 
-    public UUID getId() { return id; }
+    public Round getCurrentRound() throws NotFoundException {
+        return rounds.stream()
+                .filter(round -> round.getState() == RoundState.ACTIVE)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("No active round found"));
+    }
 
-    public Score getScore() { return score; }
+    public Integer nextWordLength() {
+        return this.wordLengthStrategy.next(
+                rounds.stream()
+                        .reduce((first, second) -> second)
+                        .map(Round::lengthOfWord)
+                        .orElse(null)
+        );
+    }
 
-    public List<Round> getRounds() { return rounds; }
+    public UUID getId() {
+        return id;
+    }
 
-    public void setState(GameState state) { this.state = state; }
+    public Score getScore() {
+        return score;
+    }
 
-    public WordLengthStrategy getWordLength() { return wordLength; }
+    public List<Round> getRounds() {
+        return rounds;
+    }
+
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
 }

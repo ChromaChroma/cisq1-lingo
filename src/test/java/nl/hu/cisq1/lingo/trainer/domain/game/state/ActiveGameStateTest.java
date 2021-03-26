@@ -34,7 +34,7 @@ class ActiveGameStateTest {
                 Score.empty(),
                 new ActiveGameState(),
                 rounds,
-                new DefaultWordLengthStrategy(5)
+                new DefaultWordLengthStrategy()
         );
     }
 
@@ -72,13 +72,13 @@ class ActiveGameStateTest {
 
     @Test
     @DisplayName("Throw when get latest hint with no existing round")
-    void throwOnGetHintWithNoROund() {
+    void throwOnGetHintWithNoRound() {
         Game game = new Game(
                 UUID.randomUUID(),
                 Score.empty(),
                 new ActiveGameState(),
                 new ArrayList<>(),
-                new DefaultWordLengthStrategy(5)
+                new DefaultWordLengthStrategy()
         );
         assertThrows(
                 NotFoundException.class,
@@ -90,12 +90,17 @@ class ActiveGameStateTest {
     @Test
     @DisplayName("guess word correct")
     void gameActiveStateGuessWordCorrect() {
+        int points = game.getScore().getPoints();
+        int rounds = game.getScore().getRoundsPlayed();
         assertDoesNotThrow(
                 () -> {
                     Hint hint = new ActiveGameState().guessWord(game, "woord");
                     assertNotNull(hint);
                 }
         );
+        Score resScore = game.getScore();
+        assertTrue(points < resScore.getPoints());
+        assertEquals(rounds + 1,  resScore.getRoundsPlayed());
     }
 
     private static Stream<Arguments> provideWrongGuesses() {

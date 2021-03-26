@@ -235,6 +235,6 @@ class RoundTest {
     @DisplayName("getCurrentRound returns most recent turn with no word guess done yet in the round")
     void getWordLength(String word) {
         Round round = Round.of(word);
-        assertEquals(word.length(), round.wordLength());
+        assertEquals(word.length(), round.lengthOfWord());
     }
 }

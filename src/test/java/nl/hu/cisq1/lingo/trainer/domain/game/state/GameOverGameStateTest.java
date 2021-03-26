@@ -23,7 +23,7 @@ class GameOverGameStateTest {
                 Score.empty(),
                 new GameOverGameState(),
                 new ArrayList<>(),
-                new DefaultWordLengthStrategy(5)
+                new DefaultWordLengthStrategy()
         );
     }
 

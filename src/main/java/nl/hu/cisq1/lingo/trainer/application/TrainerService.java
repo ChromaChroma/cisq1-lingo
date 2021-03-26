@@ -23,7 +23,7 @@ public class TrainerService {
     }
 
     public Game startNewGame() {
-        return this.gameRepository.save(Game.create());
+        return this.gameRepository.save(Game.createDefault());
     }
 
     private Game findGameById(UUID id) throws NotFoundException {
@@ -33,7 +33,7 @@ public class TrainerService {
 
     public Round startNewRound(UUID gameId) throws NotFoundException {
         Game game = findGameById(gameId);
-        String word = this.wordService.provideRandomWord(game.getWordLength().currentLength());
+        String word = this.wordService.provideRandomWord(game.nextWordLength());
         Round round = game.startNewRound(word);
         this.gameRepository.save(game);
         return round;

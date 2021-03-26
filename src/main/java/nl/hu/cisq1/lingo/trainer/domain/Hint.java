@@ -32,10 +32,15 @@ public class Hint {
         char[] wordChars = word.toCharArray();
         for (int i = 0; i < previousHint.hintSequence.size(); i ++) {
             String charString = previousHint.hintSequence.get(i).toString();
-            if (charString.matches("[a-zA-Z]+\\.?")) resChars.add(i, previousHint.hintSequence.get(i));
-            else if (marks.get(i) == Mark.CORRECT) resChars.add(wordChars[i]);
-            else if (marks.get(i) == Mark.PRESENT) resChars.add('*');
-            else resChars.add('.');
+            if (charString.matches("[a-zA-Z]+\\.?")) {
+                resChars.add(i, previousHint.hintSequence.get(i));
+            } else if (marks.get(i) == Mark.CORRECT) {
+                resChars.add(wordChars[i]);
+            } else if (marks.get(i) == Mark.PRESENT) {
+                resChars.add('*');
+            } else {
+                resChars.add('.');
+            }
         }
         return resChars;
     }

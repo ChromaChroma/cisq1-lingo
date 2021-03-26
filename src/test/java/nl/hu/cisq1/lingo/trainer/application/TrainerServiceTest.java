@@ -33,7 +33,7 @@ class TrainerServiceTest {
 
     @BeforeEach
     void setup() {
-        game = Game.create();
+        game = Game.createDefault();
         when(mockRepository.findById(any()))
                 .thenReturn(Optional.of(game));
     }

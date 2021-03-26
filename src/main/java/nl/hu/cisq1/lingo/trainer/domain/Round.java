@@ -90,7 +90,7 @@ public class Round {
         return chars;
     }
 
-    public Integer wordLength() {
+    public Integer lengthOfWord() {
         return word.length();
     }
 

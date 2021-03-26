@@ -52,8 +52,7 @@ class TrainerControllerIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.points").value(0))
-                .andExpect(jsonPath("$.roundsPlayed").value(0))
-                .andExpect(jsonPath("$.wordLength").value(5));
+                .andExpect(jsonPath("$.roundsPlayed").value(0));
 
     }
 
@@ -136,7 +135,7 @@ class TrainerControllerIntegrationTest {
     @Test
     @DisplayName("409 when trying to guess word when game over")
     void guessWordWhenGameOver() throws Exception {
-        Game game = Game.create();
+        Game game = Game.createDefault();
         game.setState(new GameOverGameState());
         this.repository.save(game);
         RequestBuilder request = MockMvcRequestBuilders
@@ -173,7 +172,7 @@ class TrainerControllerIntegrationTest {
     @Test
     @DisplayName("409 if requesting the latest hint when game over")
     void getLatestHintWhenGameOver() throws Exception {
-        Game game = Game.create();
+        Game game = Game.createDefault();
         game.setState(new GameOverGameState());
         this.repository.save(game);
         RequestBuilder request = MockMvcRequestBuilders

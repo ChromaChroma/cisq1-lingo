@@ -6,5 +6,4 @@ public class GameResponse {
     public UUID id;
     public int points;
     public int roundsPlayed;
-    public int wordLength;
 }
