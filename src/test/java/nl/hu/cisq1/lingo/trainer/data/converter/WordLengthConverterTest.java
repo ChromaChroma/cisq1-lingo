@@ -38,7 +38,8 @@ class WordLengthConverterTest {
 
     private static Stream<Arguments> provideInitialLengths() {
         return Stream.of(
-                Arguments.of("DEFAULTWORDLENGTHSTRATEGY", DefaultWordLengthStrategy.class)
+                Arguments.of("DEFAULTWORDLENGTHSTRATEGY", DefaultWordLengthStrategy.class),
+                Arguments.of("SOMERANDOMTEXTBUTNOTANEXISTINGSTRATEGY", DefaultWordLengthStrategy.class)
         );
     }
     @ParameterizedTest
