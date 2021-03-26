@@ -78,17 +78,25 @@ class ActiveGameStateTest {
     @Test
     @DisplayName("guess word correct")
     void gameActiveStateGuessWordCorrect() {
-        int points = game.getScore().getPoints();
-        int rounds = game.getScore().getRoundsPlayed();
         assertDoesNotThrow(
                 () -> {
                     Hint hint = new ActiveGameState().guessWord(game, "woord");
                     assertNotNull(hint);
                 }
         );
+    }
+
+    @Test
+    @DisplayName("guess word correct and points and rounds increase")
+    void gameActiveStateGuessWordCorrectAndScoreIncrease() throws NotFoundException {
+        int points = game.getScore().getPoints();
+        int rounds = game.getScore().getRoundsPlayed();
+
+        new ActiveGameState().guessWord(game, "woord");
+
         Score resScore = game.getScore();
         assertTrue(points < resScore.getPoints());
-        assertEquals(rounds + 1,  resScore.getRoundsPlayed());
+        assertEquals(rounds + 1, resScore.getRoundsPlayed());
     }
 
     private static Stream<Arguments> provideWrongGuesses() {
@@ -112,18 +120,27 @@ class ActiveGameStateTest {
 
     @Test
     @DisplayName("guess word wrong five times, then when game over throw")
-    void gameActiveStateGuessWordWrongFiveTimes() {
-        assertDoesNotThrow(
-                () -> {
-                    for (int i = 0; i < 5; i++) {
-                        new ActiveGameState().guessWord(game, "wrong");
-                    }
-                }
-        );
+    void gameActiveStateGuessWordWrongFiveTimesAndThrowsOnSixth() throws NotFoundException {
+        for (int i = 0; i < 5; i++) {
+            new ActiveGameState().guessWord(game, "wrong");
+        }
+
         assertThrows(
                 IllegalGameStateException.class,
-                () -> game.guessWord( "wrong")
+                () -> game.guessWord("wrong")
         );
+    }
+
+    @Test
+    @DisplayName("guess word wrong five times, then when game over throw")
+    void gameActiveStateGuessWordWrongFiveTimesAndRoundsPlayedIncreaseAndScoreIsSame() throws NotFoundException {
+        int rounds = game.getScore().getRoundsPlayed();
+        for (int i = 0; i < 5; i++) {
+            new ActiveGameState().guessWord(game, "wrong");
+        }
+        Score resScore = game.getScore();
+        assertEquals(0, resScore.getPoints());
+        assertEquals(rounds + 1, resScore.getRoundsPlayed());
     }
 
     @Test
