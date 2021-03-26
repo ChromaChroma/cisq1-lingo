@@ -20,22 +20,22 @@ public class Hint {
     }
 
     private static void checkWordAndHintSameSize(String word, Hint previousHint) {
-        if (word.length() != previousHint.hintSequence.size()) throw new InvalidHintException("Previous hint and marks arent the same size");
+        if (word.length() != previousHint.hintSequence.size())
+            throw new InvalidHintException("Previous hint and marks arent the same size");
     }
 
-    private static void checkWordAndMarksSameSize(String word,  List<Mark> marks) {
+    private static void checkWordAndMarksSameSize(String word, List<Mark> marks) {
         if (word.length() != marks.size()) throw new InvalidHintException("Word and marks arent the same size");
     }
 
     private static List<Character> createHintCharachters(String word, Hint previousHint, List<Mark> marks) {
         List<Character> resChars = new ArrayList<>();
-        char[] wordChars = word.toCharArray();
         for (int i = 0; i < previousHint.hintSequence.size(); i ++) {
             String charString = previousHint.hintSequence.get(i).toString();
             if (charString.matches("[a-zA-Z]+\\.?")) {
                 resChars.add(i, previousHint.hintSequence.get(i));
             } else if (marks.get(i) == Mark.CORRECT) {
-                resChars.add(wordChars[i]);
+                resChars.add(word.toCharArray()[i]);
             } else if (marks.get(i) == Mark.PRESENT) {
                 resChars.add('*');
             } else {
@@ -45,22 +45,24 @@ public class Hint {
         return resChars;
     }
 
-    public Hint(List<Character> hint) {
-        this.hintSequence = hint;
-    }
+    public Hint(List < Character > hint) {
+            this.hintSequence = hint;
+        }
 
-    public List<Character> getHintSequence() { return hintSequence; }
+        public List<Character> getHintSequence () {
+            return hintSequence;
+        }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Hint hint1 = (Hint) o;
-        return Objects.equals(hintSequence, hint1.hintSequence);
-    }
+        @Override
+        public boolean equals (Object o){
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Hint hint1 = (Hint) o;
+            return Objects.equals(hintSequence, hint1.hintSequence);
+        }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(hintSequence);
+        @Override
+        public int hashCode () {
+            return Objects.hash(hintSequence);
+        }
     }
-}
