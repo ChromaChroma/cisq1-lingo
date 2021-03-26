@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -54,6 +55,47 @@ class TrainerControllerIntegrationTest {
                 .andExpect(jsonPath("$.points").value(0))
                 .andExpect(jsonPath("$.roundsPlayed").value(0));
 
+    }
+
+    @Test
+    @DisplayName("Get game")
+    void getGame() throws Exception {
+        Game game = service.startNewGame();
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/trainer/games/{gameId}", game.getId());
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(game.getId().toString()))
+                .andExpect(jsonPath("$.points").value(0))
+                .andExpect(jsonPath("$.roundsPlayed").value(0));
+    }
+
+    @Test
+    @DisplayName("Get game after a round won")
+    void getGameAfterRoundWin() throws Exception {
+        Game game = Game.createDefault();
+        game.startNewRound("woord");
+        game.guessWord("woord");
+        game = this.repository.save(game);
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/trainer/games/{gameId}", game.getId());
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(game.getId().toString()))
+                .andExpect(jsonPath("$.points").value(25))
+                .andExpect(jsonPath("$.roundsPlayed").value(1));
+    }
+
+    @Test
+    @DisplayName("Get game when there is no game with id")
+    void getGameWhenNonExistent() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/trainer/games/{gameId}", UUID.randomUUID());
+
+        mockMvc.perform(request)
+                .andExpect(status().isConflict());
     }
 
     @Test

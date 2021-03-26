@@ -26,11 +26,23 @@ public class TrainerController {
     @PostMapping("/games")
     public ResponseEntity<GameResponse> startNewGame() {
         Game game = this.trainerService.startNewGame();
-        GameResponse response = new GameResponse();
-        response.id = game.getId();
-        response.points = game.getScore().getPoints();
-        response.roundsPlayed = game.getScore().getRoundsPlayed();
+        GameResponse response = new GameResponse(
+                game.getId(),
+                game.getScore().getPoints(),
+                game.getScore().getRoundsPlayed()
+        );
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/games/{gameId}")
+    public ResponseEntity<GameResponse> getGame(@PathVariable UUID gameId) throws NotFoundException {
+        Game game = this.trainerService.findGameById(gameId);
+        GameResponse response = new GameResponse(
+                game.getId(),
+                game.getScore().getPoints(),
+                game.getScore().getRoundsPlayed()
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/games/{gameId}/rounds")

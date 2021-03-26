@@ -26,7 +26,7 @@ public class TrainerService {
         return this.gameRepository.save(Game.createDefault());
     }
 
-    private Game findGameById(UUID id) throws NotFoundException {
+    public Game findGameById(UUID id) throws NotFoundException {
         return this.gameRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("No game found with id '%s'", id)));
     }
