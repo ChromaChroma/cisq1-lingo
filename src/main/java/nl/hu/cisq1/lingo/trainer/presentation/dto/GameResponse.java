@@ -3,7 +3,25 @@ package nl.hu.cisq1.lingo.trainer.presentation.dto;
 import java.util.UUID;
 
 public class GameResponse {
-    public UUID id;
-    public int points;
-    public int roundsPlayed;
+    private final UUID id;
+    private final int points;
+    private final int roundsPlayed;
+
+    public GameResponse(UUID id, int points, int roundsPlayed) {
+        this.id = id;
+        this.points = points;
+        this.roundsPlayed = roundsPlayed;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public int getRoundsPlayed() {
+        return roundsPlayed;
+    }
 }
