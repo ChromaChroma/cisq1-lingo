@@ -48,25 +48,21 @@ public class TrainerController {
     @PostMapping("/games/{gameId}/rounds")
     public ResponseEntity<RoundResponse> startNewRound(@PathVariable UUID gameId) throws NotFoundException {
         Round round = this.trainerService.startNewRound(gameId);
-        RoundResponse response = new RoundResponse();
-        response.hint = round.getLatestHint().getHintSequence();
+        RoundResponse response = new RoundResponse(round.getLatestHint().getHintSequence(), null);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/games/{gameId}/guess")
     public ResponseEntity<RoundResponse> guessWord( @PathVariable UUID gameId, @RequestBody String guess) throws NotFoundException {
         Hint hint = this.trainerService.guessWord(gameId, guess);
-        RoundResponse response = new RoundResponse();
-        response.hint = hint.getHintSequence();
-        response.guess = guess;
+        RoundResponse response = new RoundResponse(hint.getHintSequence(), guess  );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/games/{gameId}/hint")
     public ResponseEntity<RoundResponse> getLatestHint( @PathVariable UUID gameId) throws NotFoundException {
         Hint hint = this.trainerService.getLatestHint(gameId);
-        RoundResponse response = new RoundResponse();
-        response.hint = hint.getHintSequence();
+        RoundResponse response = new RoundResponse(hint.getHintSequence(), null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
