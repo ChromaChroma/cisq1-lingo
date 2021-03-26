@@ -76,7 +76,10 @@ class RoundTest {
     @DisplayName("Take correct guesses when there are guess attempts left")
     void takeCorrectGuess(String word, Map<Integer, Turn> turns) {
         Round round = new Round(word, turns);
-        round.takeGuess(word);
+
+        Feedback feedback = round.takeGuess(word);
+
+        assertNotNull(feedback);
         assertSame(RoundState.WON, round.getState());
     }
 
@@ -84,11 +87,14 @@ class RoundTest {
     @DisplayName("Take correct guess at fifth attempt is WON")
     void takeFifthCorrectGuess() {
         Round round = Round.of("woord");
+
         round.takeGuess("wursd");
         round.takeGuess("wwwww");
         round.takeGuess("sdsdd");
         round.takeGuess("noper");
-        round.takeGuess("woord");
+        Feedback feedback = round.takeGuess("woord");
+
+        assertNotNull(feedback);
         assertSame(RoundState.WON, round.getState());
     }
 
@@ -96,11 +102,12 @@ class RoundTest {
     @DisplayName("Take wrong guess at fifth attempt is LOST")
     void takeCorrectGuess() {
         Round round = Round.of("woord");
-        round.takeGuess("wursd");
-        round.takeGuess("wwwww");
-        round.takeGuess("sdsdd");
-        round.takeGuess("noper");
-        round.takeGuess("wffff");
+
+        for (int i = 0; i < 5; i++) {
+            Feedback feedback = round.takeGuess("wursd");
+            assertNotNull(feedback);
+        }
+
         assertSame(RoundState.LOST, round.getState());
     }
 
