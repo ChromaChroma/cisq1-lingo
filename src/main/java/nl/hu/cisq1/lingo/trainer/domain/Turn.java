@@ -3,7 +3,6 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -30,8 +29,7 @@ public class Turn {
     }
 
     public Feedback takeGuess(String word, String guess) {
-        guess = Optional.of(guess).orElseThrow(() -> new IllegalArgumentException("Guess cannot be null"));
-        word = Optional.of(word).orElseThrow(() -> new IllegalArgumentException("Word cannot be null"));
+        if (guess == null || word == null) throw new IllegalArgumentException("Word and Guess cannot be null");
         List<Mark> marks = chooseMarksGeneration(word, guess);
         this.feedback = new Feedback(guess, marks);
         return this.feedback;
