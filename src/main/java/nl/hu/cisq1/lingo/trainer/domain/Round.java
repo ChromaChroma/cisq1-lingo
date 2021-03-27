@@ -86,8 +86,11 @@ public class Round {
     private List<Character> buildInitialHintList() {
         List<Character> chars = new ArrayList<>();
         for (int i = 0; i < word.toCharArray().length; i++) {
-            if (i == 0) chars.add(i, word.charAt(i));
-            else chars.add('.');
+            if (i == 0) {
+                chars.add(i, word.charAt(i));
+            } else {
+                chars.add('.');
+            }
         }
         return chars;
     }
