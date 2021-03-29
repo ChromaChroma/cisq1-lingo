@@ -23,6 +23,10 @@ class TurnTest {
     static Stream<Arguments> provideTurnGuesses() {
         return Stream.of(
                 Arguments.of(
+                        "whord",
+                        "woord",
+                        List.of(Mark.CORRECT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)
+                ),Arguments.of(
                         "woord",
                         "woord",
                         List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)

@@ -46,15 +46,18 @@ public class Turn {
 
     private List<Mark> generateMarks(String word, String guess) {
         List<Mark> marks = new ArrayList<>();
-        for (int i = 0; i < word.toCharArray().length; i++) marks.add(Mark.CORRECT);
+        for (int i = 0; i < word.toCharArray().length; i++) marks.add(Mark.ABSENT);
         char[] guessArray = guess.toCharArray();
         for (int i = 0; i < guessArray.length; i++) {
             int characterIndex = word.indexOf(guessArray[i]);
-            if (characterIndex == -1) {
-                marks.set(i, Mark.ABSENT);
-            } else if (characterIndex == i) {
+            if (characterIndex == i) {
+                marks.set(i, Mark.CORRECT);
                 word = word.replaceFirst(String.valueOf(guessArray[i]), ".");
-            } else {
+            }
+        }
+        for (int i = 0; i < guessArray.length; i++) {
+            int characterIndex = word.indexOf(guessArray[i]);
+            if (characterIndex != -1){
                 marks.set(i, Mark.PRESENT);
                 word = word.replaceFirst(String.valueOf(guessArray[i]), ".");
             }
