@@ -57,7 +57,7 @@ public class Turn {
         }
         for (int i = 0; i < guessArray.length; i++) {
             int characterIndex = word.indexOf(guessArray[i]);
-            if (characterIndex != -1){
+            if (characterIndex != -1 && marks.get(i) != Mark.CORRECT) {
                 marks.set(i, Mark.PRESENT);
                 word = word.replaceFirst(String.valueOf(guessArray[i]), ".");
             }
