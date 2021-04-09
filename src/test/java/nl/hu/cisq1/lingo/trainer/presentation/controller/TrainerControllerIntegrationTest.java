@@ -127,7 +127,7 @@ class TrainerControllerIntegrationTest {
     void guessWord() throws Exception {
         Game game = service.startNewGame();
         service.startNewRound(game.getId());
-        String word = "woord";
+        String word = "pizza";
         RequestBuilder request = MockMvcRequestBuilders
                 .post("/trainer/games/{gameId}/guess", game.getId())
                 .content(word);

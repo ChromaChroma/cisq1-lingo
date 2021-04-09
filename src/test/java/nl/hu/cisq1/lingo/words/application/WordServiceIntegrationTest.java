@@ -54,7 +54,7 @@ class WordServiceIntegrationTest {
     }
     static Stream<Arguments> provideWords() {
         return Stream.of(
-                Arguments.of("woord", true),
+                Arguments.of("pizza", true),
                 Arguments.of("bbbbb", false)
 
         );

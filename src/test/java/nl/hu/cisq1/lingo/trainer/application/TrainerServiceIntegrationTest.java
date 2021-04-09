@@ -67,7 +67,7 @@ class TrainerServiceIntegrationTest {
     void guessTheWord() {
         UUID gameId = this.game.getId();
         assertDoesNotThrow(() -> service.startNewRound(gameId));
-        assertDoesNotThrow(() -> service.guessWord(gameId, "woord"));
+        assertDoesNotThrow(() -> service.guessWord(gameId, "pizza"));
     }
 
     @Test
