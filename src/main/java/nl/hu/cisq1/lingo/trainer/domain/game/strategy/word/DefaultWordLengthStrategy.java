@@ -1,4 +1,4 @@
-package nl.hu.cisq1.lingo.trainer.domain.game.strategy;
+package nl.hu.cisq1.lingo.trainer.domain.game.strategy.word;
 
 import java.util.HashMap;
 import java.util.Map;

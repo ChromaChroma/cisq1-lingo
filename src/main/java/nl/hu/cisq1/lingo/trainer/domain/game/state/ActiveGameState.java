@@ -6,6 +6,7 @@ import nl.hu.cisq1.lingo.trainer.domain.Round;
 import nl.hu.cisq1.lingo.trainer.domain.RoundState;
 import nl.hu.cisq1.lingo.trainer.domain.Score;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
+import nl.hu.cisq1.lingo.trainer.domain.game.strategy.score.DefaultCalculateScoreStrategy;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalGameStateException;
 
 public class ActiveGameState implements GameState {
@@ -38,24 +39,8 @@ public class ActiveGameState implements GameState {
     private void updateGameScore(Game game, Round currentRound) {
         Score score = game.getScore();
         score.increaseRoundsPlayed();
-        Integer winScore = calculateRoundScore(currentRound);
+        Integer winScore = new DefaultCalculateScoreStrategy().calculateScore(currentRound);
         score.increasePoints(winScore);
-    }
-
-    private Integer calculateRoundScore(Round round) {
-        int initialMultiplier = 5;
-        int initialAddition = 5;
-        int maxRounds = 5;
-        int attempts = calculateAttemptsMade(round);
-        return initialMultiplier * (maxRounds - attempts) + initialAddition;
-    }
-
-    private int calculateAttemptsMade(Round round) {
-        return (int) round.getTurns()
-                .values()
-                .stream()
-                .filter(turn -> turn.getFeedback() != null)
-                .count();
     }
 
     @Override

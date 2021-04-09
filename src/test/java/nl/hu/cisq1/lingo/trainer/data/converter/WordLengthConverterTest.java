@@ -1,7 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.data.converter;
 
-import nl.hu.cisq1.lingo.trainer.domain.game.strategy.DefaultWordLengthStrategy;
-import nl.hu.cisq1.lingo.trainer.domain.game.strategy.WordLengthStrategy;
+import nl.hu.cisq1.lingo.trainer.domain.game.strategy.word.DefaultWordLengthStrategy;
+import nl.hu.cisq1.lingo.trainer.domain.game.strategy.word.WordLengthStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

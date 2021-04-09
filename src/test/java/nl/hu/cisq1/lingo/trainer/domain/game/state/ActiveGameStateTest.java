@@ -5,7 +5,7 @@ import nl.hu.cisq1.lingo.trainer.domain.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.Round;
 import nl.hu.cisq1.lingo.trainer.domain.Score;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
-import nl.hu.cisq1.lingo.trainer.domain.game.strategy.DefaultWordLengthStrategy;
+import nl.hu.cisq1.lingo.trainer.domain.game.strategy.word.DefaultWordLengthStrategy;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalGameStateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

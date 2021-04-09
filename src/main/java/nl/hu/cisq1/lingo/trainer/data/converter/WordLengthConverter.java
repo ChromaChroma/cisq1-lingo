@@ -1,7 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.data.converter;
 
-import nl.hu.cisq1.lingo.trainer.domain.game.strategy.DefaultWordLengthStrategy;
-import nl.hu.cisq1.lingo.trainer.domain.game.strategy.WordLengthStrategy;
+import nl.hu.cisq1.lingo.trainer.domain.game.strategy.word.DefaultWordLengthStrategy;
+import nl.hu.cisq1.lingo.trainer.domain.game.strategy.word.WordLengthStrategy;
 
 import javax.persistence.AttributeConverter;
 
@@ -13,10 +13,7 @@ public class WordLengthConverter  implements AttributeConverter<WordLengthStrate
 
     @Override
     public WordLengthStrategy convertToEntityAttribute(String wordLengthStrategy) {
-        return switch (wordLengthStrategy.toUpperCase()) {
-            case "DEFAULTWORDLENGTHSTRATEGY" -> new DefaultWordLengthStrategy();
-            default -> new DefaultWordLengthStrategy();
-        };
-
+        //No if or switch case, because DefaultWordLengthStrategy is the only current implementation
+        return new DefaultWordLengthStrategy();
     }
 }
