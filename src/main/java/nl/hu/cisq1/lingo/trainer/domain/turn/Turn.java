@@ -1,6 +1,8 @@
-package nl.hu.cisq1.lingo.trainer.domain;
+package nl.hu.cisq1.lingo.trainer.domain.turn;
 
-import nl.hu.cisq1.lingo.trainer.domain.game.strategy.marks.DefaultGenerateMarksStrategy;
+import nl.hu.cisq1.lingo.trainer.domain.Feedback;
+import nl.hu.cisq1.lingo.trainer.domain.Mark;
+import nl.hu.cisq1.lingo.trainer.domain.turn.strategy.marks.DefaultGenerateMarksStrategy;
 
 import javax.persistence.*;
 import java.util.List;

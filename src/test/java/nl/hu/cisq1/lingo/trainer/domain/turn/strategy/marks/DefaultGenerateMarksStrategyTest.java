@@ -1,4 +1,4 @@
-package nl.hu.cisq1.lingo.trainer.domain.game.strategy.marks;
+package nl.hu.cisq1.lingo.trainer.domain.turn.strategy.marks;
 
 import nl.hu.cisq1.lingo.trainer.domain.Mark;
 import org.junit.jupiter.api.DisplayName;

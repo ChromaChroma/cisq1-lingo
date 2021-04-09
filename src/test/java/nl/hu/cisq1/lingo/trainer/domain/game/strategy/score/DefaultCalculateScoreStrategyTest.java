@@ -3,7 +3,7 @@ package nl.hu.cisq1.lingo.trainer.domain.game.strategy.score;
 import nl.hu.cisq1.lingo.trainer.domain.Feedback;
 import nl.hu.cisq1.lingo.trainer.domain.Mark;
 import nl.hu.cisq1.lingo.trainer.domain.Round;
-import nl.hu.cisq1.lingo.trainer.domain.Turn;
+import nl.hu.cisq1.lingo.trainer.domain.turn.Turn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

@@ -1,5 +1,7 @@
-package nl.hu.cisq1.lingo.trainer.domain;
+package nl.hu.cisq1.lingo.trainer.domain.turn;
 
+import nl.hu.cisq1.lingo.trainer.domain.Feedback;
+import nl.hu.cisq1.lingo.trainer.domain.Mark;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TurnTest {
-    private  Turn turn= new Turn();
+    private Turn turn= new Turn();
 
     @BeforeEach
     void setUp() {

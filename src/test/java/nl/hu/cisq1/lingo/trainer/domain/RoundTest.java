@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.turn.Turn;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalRoundStateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
