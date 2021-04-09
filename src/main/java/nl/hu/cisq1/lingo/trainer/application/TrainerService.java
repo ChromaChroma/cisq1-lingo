@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.application;
 
 import javassist.NotFoundException;
+import nl.hu.cisq1.lingo.exception.InvalidWordException;
 import nl.hu.cisq1.lingo.trainer.data.repository.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.Round;
@@ -41,6 +42,9 @@ public class TrainerService {
 
     public Hint guessWord(UUID gameId, String guess) throws NotFoundException {
         Game game = findGameById(gameId);
+        if (!this.wordService.wordExists(guess)) {
+            throw new InvalidWordException("Word does not exist or is invalid");
+        }
         Hint hint = game.guessWord(guess);
         this.gameRepository.save(game);
         return hint;

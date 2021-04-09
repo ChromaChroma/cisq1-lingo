@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.application;
 
 import javassist.NotFoundException;
+import nl.hu.cisq1.lingo.exception.InvalidWordException;
 import nl.hu.cisq1.lingo.trainer.data.repository.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Round;
 import nl.hu.cisq1.lingo.trainer.domain.RoundState;
@@ -146,6 +147,8 @@ class TrainerServiceTest {
     void guessWord() {
         UUID uuid = game.getId();
         game.startNewRound("woord");
+        when(mockWordService.wordExists(any()))
+                .thenReturn(true);
         TrainerService trainerService = new TrainerService(mockRepository, mockWordService);
 
         assertDoesNotThrow(
@@ -153,7 +156,26 @@ class TrainerServiceTest {
         );
 
         verify(mockRepository, times(1)).findById(uuid);
+        verify(mockWordService, times(1)).wordExists(any());
         verify(mockRepository, times(1)).save(any(Game.class));
+    }
+
+    @Test
+    @DisplayName("Guess not existing word")
+    void guessNotExistingWord() {
+        UUID uuid = game.getId();
+        game.startNewRound("woord");
+        when(mockWordService.wordExists(any()))
+                .thenReturn(false);
+        TrainerService trainerService = new TrainerService(mockRepository, mockWordService);
+
+        assertThrows(
+                InvalidWordException.class,
+                () -> trainerService.guessWord(uuid, "woord")
+        );
+
+        verify(mockRepository, times(1)).findById(uuid);
+        verify(mockWordService, times(1)).wordExists(any());
     }
 
     @Test
