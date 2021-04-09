@@ -2,7 +2,6 @@ package nl.hu.cisq1.lingo.trainer.domain.turn.strategy.marks;
 
 import nl.hu.cisq1.lingo.trainer.domain.Mark;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -15,24 +14,34 @@ public class DefaultGenerateMarksStrategy implements GenerateMarksStrategy{
     }
 
     private List<Mark> generateValidMarks(String word, String guess) {
-        List<Mark> marks = new ArrayList<>();
-        for (int i = 0; i < word.toCharArray().length; i++) marks.add(Mark.ABSENT);
-        char[] guessArray = guess.toCharArray();
-        for (int i = 0; i < guessArray.length; i++) {
-            int characterIndex = word.indexOf(guessArray[i]);
-            if (characterIndex == i) {
-                marks.set(i, Mark.CORRECT);
-                word = word.replaceFirst(String.valueOf(guessArray[i]), ".");
-            }
-        }
-        for (int i = 0; i < guessArray.length; i++) {
-            int characterIndex = word.indexOf(guessArray[i]);
-            if (characterIndex != -1 && marks.get(i) != Mark.CORRECT) {
-                marks.set(i, Mark.PRESENT);
-                word = word.replaceFirst(String.valueOf(guessArray[i]), ".");
-            }
-        }
+        List<Mark> marks = createAbsentMarkList(word);
+        setCorrectMarks(word, guess, marks);
+        setPresentMarks(word, guess, marks);
         return marks;
+    }
+
+    private List<Mark> createAbsentMarkList(String word) {
+        return word.chars()
+                .mapToObj(integer -> Mark.ABSENT)
+                .collect(Collectors.toList());
+    }
+
+    private void setCorrectMarks(String word, String guess, List<Mark> marks ) {
+        for (int i = 0; i < guess.length(); i++) {
+            if (word.indexOf(guess.charAt(i)) == i) {
+                marks.set(i, Mark.CORRECT);
+                word = word.replaceFirst(String.valueOf(guess.charAt(i)), ".");
+            }
+        }
+    }
+
+    private void setPresentMarks(String word, String guess, List<Mark> marks ) {
+        for (int i = 0; i < guess.length(); i++) {
+            if (word.indexOf(guess.charAt(i)) != -1 && marks.get(i) != Mark.CORRECT) {
+                marks.set(i, Mark.PRESENT);
+                word = word.replaceFirst(String.valueOf(guess.charAt(i)), ".");
+            }
+        }
     }
 
     private List<Mark> generateInvalidMarks(String guess) {
