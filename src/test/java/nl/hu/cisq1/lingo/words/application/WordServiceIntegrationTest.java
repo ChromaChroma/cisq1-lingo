@@ -3,9 +3,14 @@ package nl.hu.cisq1.lingo.words.application;
 import nl.hu.cisq1.lingo.CiTestConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -33,11 +38,25 @@ class WordServiceIntegrationTest {
     void providesRandomWord() {
         for (int wordLength = 5; wordLength <= 7; wordLength++) {
             String randomWord = this.service.provideRandomWord(wordLength);
-            assertEquals(wordLength, randomWord.length());
 
-            // Printing is not necessary in most tests
-            // (done here for verification of student configuration)
-            System.out.println("Random word: " + randomWord);
+            assertEquals(wordLength, randomWord.length());
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideWords")
+    @DisplayName("Word exists returns expected boolean")
+    void wordExists_ReturnsExpectedBoolean(String word, boolean expectedBoolean ) {
+
+        boolean exists = service.wordExists(word);
+
+        assertEquals(expectedBoolean, exists);
+    }
+    static Stream<Arguments> provideWords() {
+        return Stream.of(
+                Arguments.of("woord", true),
+                Arguments.of("bbbbb", false)
+
+        );
     }
 }

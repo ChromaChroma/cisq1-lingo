@@ -3,6 +3,7 @@ package nl.hu.cisq1.lingo.words.application;
 import nl.hu.cisq1.lingo.words.data.SpringWordRepository;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,16 +26,22 @@ import static org.mockito.Mockito.*;
  * - the WordService calls a test double instead of an actual repository
  */
 class WordServiceTest {
+    private static SpringWordRepository mockRepository;
+    private static WordService service;
+
+    @BeforeAll
+    static void init() {
+        mockRepository = mock(SpringWordRepository.class);
+        service = new WordService(mockRepository);
+    }
 
     @ParameterizedTest
     @DisplayName("requests a random word of a specified length from the repository")
     @MethodSource("randomWordExamples")
     void providesRandomWord(int wordLength, String word) {
-        SpringWordRepository mockRepository = mock(SpringWordRepository.class);
         when(mockRepository.findRandomWordByLength(wordLength))
                 .thenReturn(Optional.of(new Word(word)));
 
-        WordService service = new WordService(mockRepository);
         String result = service.provideRandomWord(wordLength);
 
         assertEquals(word, result);
@@ -43,11 +50,8 @@ class WordServiceTest {
     @Test
     @DisplayName("throws exception if length not supported")
     void unsupportedLength() {
-        SpringWordRepository mockRepository = mock(SpringWordRepository.class);
         when(mockRepository.findRandomWordByLength(anyInt()))
                 .thenReturn(Optional.empty());
-
-        WordService service = new WordService(mockRepository);
 
         assertThrows(
                 WordLengthNotSupportedException.class,
@@ -60,6 +64,24 @@ class WordServiceTest {
                 Arguments.of(5, "tower"),
                 Arguments.of(6, "castle"),
                 Arguments.of(7, "knights")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideWords")
+    @DisplayName("Word exists returns expected boolean")
+    void wordExists_ReturnsExpectedBoolean(String word, boolean expectedBoolean ) {
+        when(mockRepository.findWordByValue("woord"))
+                .thenReturn(Optional.of(new Word("woord")));
+
+        boolean exists = service.wordExists(word);
+
+        assertEquals(expectedBoolean, exists);
+    }
+    static Stream<Arguments> provideWords() {
+        return Stream.of(
+                Arguments.of("woord", true),
+                Arguments.of("bbbbb", false)
         );
     }
 }
