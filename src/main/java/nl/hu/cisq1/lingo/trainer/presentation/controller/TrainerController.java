@@ -2,9 +2,9 @@ package nl.hu.cisq1.lingo.trainer.presentation.controller;
 
 import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.application.TrainerService;
-import nl.hu.cisq1.lingo.trainer.domain.Hint;
-import nl.hu.cisq1.lingo.trainer.domain.Round;
+import nl.hu.cisq1.lingo.trainer.domain.feedback.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
+import nl.hu.cisq1.lingo.trainer.domain.round.Round;
 import nl.hu.cisq1.lingo.trainer.presentation.dto.GameResponse;
 import nl.hu.cisq1.lingo.trainer.presentation.dto.RoundResponse;
 import org.springframework.http.HttpStatus;

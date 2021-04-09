@@ -1,6 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain.game.strategy.score;
 
-import nl.hu.cisq1.lingo.trainer.domain.Round;
+import nl.hu.cisq1.lingo.trainer.domain.round.Round;
 
 public class DefaultCalculateScoreStrategy implements CalculateScoreStrategy {
     private static final int INITIAL_MULTIPLIER = 5;

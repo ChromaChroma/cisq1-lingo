@@ -3,14 +3,13 @@ package nl.hu.cisq1.lingo.trainer.domain.game;
 import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.data.converter.GameStateConverter;
 import nl.hu.cisq1.lingo.trainer.data.converter.WordLengthConverter;
-import nl.hu.cisq1.lingo.trainer.domain.Hint;
-import nl.hu.cisq1.lingo.trainer.domain.Round;
-import nl.hu.cisq1.lingo.trainer.domain.RoundState;
-import nl.hu.cisq1.lingo.trainer.domain.Score;
+import nl.hu.cisq1.lingo.trainer.domain.feedback.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.game.state.AwaitingRoundGameState;
 import nl.hu.cisq1.lingo.trainer.domain.game.state.GameState;
 import nl.hu.cisq1.lingo.trainer.domain.game.strategy.word.DefaultWordLengthStrategy;
 import nl.hu.cisq1.lingo.trainer.domain.game.strategy.word.WordLengthStrategy;
+import nl.hu.cisq1.lingo.trainer.domain.round.Round;
+import nl.hu.cisq1.lingo.trainer.domain.round.RoundState;
 
 import javax.persistence.*;
 import java.util.ArrayList;

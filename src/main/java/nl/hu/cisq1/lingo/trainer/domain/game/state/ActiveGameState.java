@@ -1,12 +1,12 @@
 package nl.hu.cisq1.lingo.trainer.domain.game.state;
 
 import javassist.NotFoundException;
-import nl.hu.cisq1.lingo.trainer.domain.Hint;
-import nl.hu.cisq1.lingo.trainer.domain.Round;
-import nl.hu.cisq1.lingo.trainer.domain.RoundState;
-import nl.hu.cisq1.lingo.trainer.domain.Score;
+import nl.hu.cisq1.lingo.trainer.domain.feedback.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
+import nl.hu.cisq1.lingo.trainer.domain.game.Score;
 import nl.hu.cisq1.lingo.trainer.domain.game.strategy.score.DefaultCalculateScoreStrategy;
+import nl.hu.cisq1.lingo.trainer.domain.round.Round;
+import nl.hu.cisq1.lingo.trainer.domain.round.RoundState;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalGameStateException;
 
 public class ActiveGameState implements GameState {

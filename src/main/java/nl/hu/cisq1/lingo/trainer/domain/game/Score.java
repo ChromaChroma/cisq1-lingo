@@ -1,4 +1,4 @@
-package nl.hu.cisq1.lingo.trainer.domain;
+package nl.hu.cisq1.lingo.trainer.domain.game;
 
 import javax.persistence.*;
 import java.util.UUID;

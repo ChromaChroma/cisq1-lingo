@@ -1,7 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain.turn;
 
-import nl.hu.cisq1.lingo.trainer.domain.Feedback;
-import nl.hu.cisq1.lingo.trainer.domain.Mark;
+import nl.hu.cisq1.lingo.trainer.domain.feedback.Feedback;
+import nl.hu.cisq1.lingo.trainer.domain.feedback.Mark;
 import nl.hu.cisq1.lingo.trainer.domain.turn.strategy.marks.DefaultGenerateMarksStrategy;
 
 import javax.persistence.*;

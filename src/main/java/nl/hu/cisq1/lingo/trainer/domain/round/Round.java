@@ -1,5 +1,7 @@
-package nl.hu.cisq1.lingo.trainer.domain;
+package nl.hu.cisq1.lingo.trainer.domain.round;
 
+import nl.hu.cisq1.lingo.trainer.domain.feedback.Feedback;
+import nl.hu.cisq1.lingo.trainer.domain.feedback.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.turn.Turn;
 import nl.hu.cisq1.lingo.trainer.exception.IllegalRoundStateException;
 

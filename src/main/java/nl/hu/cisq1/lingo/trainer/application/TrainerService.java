@@ -3,9 +3,9 @@ package nl.hu.cisq1.lingo.trainer.application;
 import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.exception.InvalidWordException;
 import nl.hu.cisq1.lingo.trainer.data.repository.SpringGameRepository;
-import nl.hu.cisq1.lingo.trainer.domain.Hint;
-import nl.hu.cisq1.lingo.trainer.domain.Round;
+import nl.hu.cisq1.lingo.trainer.domain.feedback.Hint;
 import nl.hu.cisq1.lingo.trainer.domain.game.Game;
+import nl.hu.cisq1.lingo.trainer.domain.round.Round;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import org.springframework.stereotype.Service;
 

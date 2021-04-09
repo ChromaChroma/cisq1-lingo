@@ -1,6 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain.turn.strategy.marks;
 
-import nl.hu.cisq1.lingo.trainer.domain.Mark;
+import nl.hu.cisq1.lingo.trainer.domain.feedback.Mark;
 
 import java.util.List;
 
