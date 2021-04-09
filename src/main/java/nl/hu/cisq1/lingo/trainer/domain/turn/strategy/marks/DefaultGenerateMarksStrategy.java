@@ -14,28 +14,29 @@ public class DefaultGenerateMarksStrategy implements GenerateMarksStrategy{
     }
 
     private List<Mark> generateValidMarks(String word, String guess) {
-        List<Mark> marks = createAbsentMarkList(word);
-        setCorrectMarks(word, guess, marks);
+        List<Mark> marks = setAbsentMarks(word);
+        word = setCorrectMarks(word, guess, marks);
         setPresentMarks(word, guess, marks);
         return marks;
     }
 
-    private List<Mark> createAbsentMarkList(String word) {
+    private List<Mark> setAbsentMarks(String word) {
         return word.chars()
                 .mapToObj(integer -> Mark.ABSENT)
                 .collect(Collectors.toList());
     }
 
-    private void setCorrectMarks(String word, String guess, List<Mark> marks ) {
+    private String setCorrectMarks(String word, String guess, List<Mark> marks) {
         for (int i = 0; i < guess.length(); i++) {
             if (word.indexOf(guess.charAt(i)) == i) {
                 marks.set(i, Mark.CORRECT);
                 word = word.replaceFirst(String.valueOf(guess.charAt(i)), ".");
             }
         }
+        return word;
     }
 
-    private void setPresentMarks(String word, String guess, List<Mark> marks ) {
+    private void setPresentMarks(String word, String guess, List<Mark> marks) {
         for (int i = 0; i < guess.length(); i++) {
             if (word.indexOf(guess.charAt(i)) != -1 && marks.get(i) != Mark.CORRECT) {
                 marks.set(i, Mark.PRESENT);

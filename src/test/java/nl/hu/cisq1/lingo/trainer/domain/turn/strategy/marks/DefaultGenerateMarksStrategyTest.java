@@ -24,6 +24,11 @@ class DefaultGenerateMarksStrategyTest {
     private static Stream<Arguments> provideExamples() {
         return Stream.of(
                 Arguments.of(
+                        "whord",
+                        "woord",
+                        List.of(Mark.CORRECT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)
+                ),
+                Arguments.of(
                         "woord",
                         "woord",
                         List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)
